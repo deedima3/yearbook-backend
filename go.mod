@@ -4,5 +4,6 @@ go 1.17
 
 require (
 	github.com/SIC-Unud/sicgolib v1.0.3 // indirect
+	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 )
