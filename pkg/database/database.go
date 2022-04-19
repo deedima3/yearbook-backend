@@ -10,7 +10,7 @@ import (
 )
 
 func GetDatabase() (*sql.DB) {
-	dataSourceName := "zh9b94e86tl6:pscale_pw_ftOx0YKNFJKmFaWI-gjNtyReEfUubj-QwYfrLcI_PiE@tcp(ddzkodr24h6n.ap-southeast-2.psdb.cloud)/yearbook_db?tls=true"
+	dataSourceName := "wwf8tp2ayr9o:pscale_pw_xntAqxzzj1p6ZQWzZMUxOUYTBrCV8zz0IM5gjV29iFI@tcp(ddzkodr24h6n.ap-southeast-2.psdb.cloud)/yearbook_db?tls=true"
 	db, err := sql.Open("mysql", dataSourceName)
 	if err != nil {
 		log.Printf("ERROR GetDatabase sql open connection fatal error: %v\n", err)
