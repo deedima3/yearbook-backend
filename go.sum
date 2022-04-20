@@ -8,3 +8,5 @@ github.com/joho/godotenv v1.4.0 h1:3l4+N6zfMWnkbPEXKng2o2/MR5mSwTrBih4ZEkkz1lg=
 github.com/joho/godotenv v1.4.0/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
 github.com/peteprogrammer/go-automapper v0.0.0-20200419053654-7c63d5bb0eb4 h1:MyZutQ7NuPxrLRMLWGwbsHGM3Bi59ruiq5bFQgK1uMY=
 github.com/peteprogrammer/go-automapper v0.0.0-20200419053654-7c63d5bb0eb4/go.mod h1:RRmLeRm4ysMPMXQ/zPqm08xPA6agF7FyeJ8QX06Ve5s=
+golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4 h1:kUhD7nTDoI3fVd9G4ORWrbV5NY0liEs/Jg2pv5f+bBA=
+golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4/go.mod h1:IxCIyHEi3zRg3s0A5j5BB6A9Jmi73HwBIUl50j+osU4=
