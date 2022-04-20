@@ -2,10 +2,10 @@ package controller
 
 import (
 	"github.com/SIC-Unud/sicgolib"
-	"github.com/deedima3/yearbook-backend/internal/User/dto"
-	"github.com/deedima3/yearbook-backend/internal/User/helper"
-	userServicePkg "github.com/deedima3/yearbook-backend/internal/User/service/api"
 	"github.com/deedima3/yearbook-backend/internal/global"
+	"github.com/deedima3/yearbook-backend/internal/user/dto"
+	"github.com/deedima3/yearbook-backend/internal/user/helper"
+	userServicePkg "github.com/deedima3/yearbook-backend/internal/user/service/api"
 	"github.com/gorilla/mux"
 	"net/http"
 )

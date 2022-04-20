@@ -2,7 +2,7 @@ package api
 
 import (
 	"context"
-	"github.com/deedima3/yearbook-backend/internal/User/entity"
+	"github.com/deedima3/yearbook-backend/internal/user/entity"
 )
 
 type UserRepository interface {

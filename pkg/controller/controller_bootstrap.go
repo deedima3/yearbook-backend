@@ -4,13 +4,13 @@ import (
 	"database/sql"
 
 	"github.com/SIC-Unud/sicgolib"
-	userControllerPkg "github.com/deedima3/yearbook-backend/internal/User/controller"
-	userRepositoryPkg "github.com/deedima3/yearbook-backend/internal/User/repository/impl"
-	userServicePkg "github.com/deedima3/yearbook-backend/internal/User/service/impl"
 	blogpostControllerPkg "github.com/deedima3/yearbook-backend/internal/blogpost/controller"
 	blogpostRepositoryPkg "github.com/deedima3/yearbook-backend/internal/blogpost/repository/impl"
 	blogpostServicePkg "github.com/deedima3/yearbook-backend/internal/blogpost/service/impl"
 	"github.com/deedima3/yearbook-backend/internal/ping"
+	userControllerPkg "github.com/deedima3/yearbook-backend/internal/user/controller"
+	userRepositoryPkg "github.com/deedima3/yearbook-backend/internal/user/repository/impl"
+	userServicePkg "github.com/deedima3/yearbook-backend/internal/user/service/impl"
 	"github.com/gorilla/mux"
 )
 

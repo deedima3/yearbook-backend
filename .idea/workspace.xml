@@ -4,22 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a79ab686-3775-4ae0-bfd5-e59544be5625" name="Changes" comment="User Added">
-      <change afterPath="$PROJECT_DIR$/internal/User/helper/helper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+    <list default="true" id="a79ab686-3775-4ae0-bfd5-e59544be5625" name="Changes" comment="User Registration flow">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/User/controller/user_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/User/controller/user_controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/User/dto/user_request_dto.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/User/dto/user_request_dto.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/User/entity/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/User/entity/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/User/repository/api/user_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/User/repository/api/user_repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/User/repository/impl/user_repository_impl.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/User/repository/impl/user_repository_impl.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/User/service/api/user_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/User/service/api/user_service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/User/service/impl/user_service_impl.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/User/service/impl/user_service_impl.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/global/api_paths.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/global/api_paths.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/controller/controller_bootstrap.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/controller/controller_bootstrap.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/database/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/database/database.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +128,8 @@
     <MESSAGE value="PlanetScale Database Connection" />
     <MESSAGE value="Update" />
     <MESSAGE value="User Added" />
-    <option name="LAST_COMMIT_MESSAGE" value="User Added" />
+    <MESSAGE value="User Registration flow" />
+    <option name="LAST_COMMIT_MESSAGE" value="User Registration flow" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

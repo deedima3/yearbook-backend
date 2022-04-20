@@ -3,8 +3,8 @@ package impl
 import (
 	"context"
 	"database/sql"
-	"github.com/deedima3/yearbook-backend/internal/User/entity"
-	"github.com/deedima3/yearbook-backend/internal/User/helper"
+	"github.com/deedima3/yearbook-backend/internal/user/entity"
+	"github.com/deedima3/yearbook-backend/internal/user/helper"
 )
 
 type userRepositoryImpl struct {

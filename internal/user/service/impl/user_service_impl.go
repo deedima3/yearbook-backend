@@ -2,10 +2,10 @@ package impl
 
 import (
 	"context"
-	"github.com/deedima3/yearbook-backend/internal/User/dto"
-	"github.com/deedima3/yearbook-backend/internal/User/entity"
-	"github.com/deedima3/yearbook-backend/internal/User/helper"
-	UserRepositoryPkg "github.com/deedima3/yearbook-backend/internal/User/repository/api"
+	"github.com/deedima3/yearbook-backend/internal/user/dto"
+	"github.com/deedima3/yearbook-backend/internal/user/entity"
+	"github.com/deedima3/yearbook-backend/internal/user/helper"
+	UserRepositoryPkg "github.com/deedima3/yearbook-backend/internal/user/repository/api"
 )
 
 type userServiceImpl struct {
