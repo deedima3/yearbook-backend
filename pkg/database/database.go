@@ -4,17 +4,18 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func GetDatabase() (*sql.DB) {
-	dataSourceName := "wwf8tp2ayr9o:pscale_pw_xntAqxzzj1p6ZQWzZMUxOUYTBrCV8zz0IM5gjV29iFI@tcp(ddzkodr24h6n.ap-southeast-2.psdb.cloud)/yearbook_db?tls=true"
+func GetDatabase() *sql.DB {
+	dataSourceName := os.Getenv("DSN")
 	db, err := sql.Open("mysql", dataSourceName)
 	if err != nil {
 		log.Printf("ERROR GetDatabase sql open connection fatal error: %v\n", err)
-		for{
+		for {
 			log.Printf("INFO GetDatabase re-attempting to reconnect to database...")
 			time.Sleep(1 * time.Second)
 			if err == nil {
@@ -24,7 +25,7 @@ func GetDatabase() (*sql.DB) {
 	}
 	if db.Ping(); err != nil {
 		log.Printf("ERROR GetDatabase ping fatal error: %v\n", err)
-		for{
+		for {
 			log.Println("INFO GetDatabase re-attempting to reconnect to database...")
 			time.Sleep(1 * time.Second)
 			db, err := sql.Open("mysql", dataSourceName)
@@ -39,7 +40,7 @@ func GetDatabase() (*sql.DB) {
 }
 
 func TestConnection() {
-	db:= GetDatabase()
+	db := GetDatabase()
 	if err := db.Ping(); err != nil {
 		panic(err)
 	}

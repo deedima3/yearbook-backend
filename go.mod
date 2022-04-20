@@ -9,4 +9,7 @@ require (
 	github.com/joho/godotenv v1.4.0
 )
 
-require github.com/peteprogrammer/go-automapper v0.0.0-20200419053654-7c63d5bb0eb4 // indirect
+require (
+	github.com/peteprogrammer/go-automapper v0.0.0-20200419053654-7c63d5bb0eb4 // indirect
+	golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4 // indirect
+)
