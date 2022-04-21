@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a79ab686-3775-4ae0-bfd5-e59544be5625" name="Changes" comment="User Update Flow&#10;- edit user #12&#10;- get all user" />
+    <list default="true" id="a79ab686-3775-4ae0-bfd5-e59544be5625" name="Changes" comment="User Update Flow 2&#10;- edit user #12&#10;- get all user">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -112,7 +114,8 @@
     <MESSAGE value="User Registration flow" />
     <MESSAGE value="User Registration flow&#10;- lowercase folder User" />
     <MESSAGE value="User Update Flow&#10;- edit user #12&#10;- get all user" />
-    <option name="LAST_COMMIT_MESSAGE" value="User Update Flow&#10;- edit user #12&#10;- get all user" />
+    <MESSAGE value="User Update Flow 2&#10;- edit user #12&#10;- get all user" />
+    <option name="LAST_COMMIT_MESSAGE" value="User Update Flow 2&#10;- edit user #12&#10;- get all user" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

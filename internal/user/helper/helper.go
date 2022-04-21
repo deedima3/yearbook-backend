@@ -33,8 +33,8 @@ func BadRequest(err error, key string, msg string) {
 
 func NotFound(key string, msg string) {
 	panic(sicgolib.NewErrorResponse(
-		http.StatusBadRequest,
-		sicgolib.RESPONSE_ERROR_BUSINESS_LOGIC_MESSAGE,
+		http.StatusNotFound,
+		sicgolib.RESPONSE_ERROR_DATA_NOT_EXISTS_MESSAGE,
 		sicgolib.NewErrorResponseValue(key, msg),
 	))
 }
