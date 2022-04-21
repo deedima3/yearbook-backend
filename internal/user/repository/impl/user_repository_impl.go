@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/deedima3/yearbook-backend/internal/user/entity"
 	"github.com/deedima3/yearbook-backend/internal/user/helper"
+	"strconv"
 )
 
 type userRepositoryImpl struct {
@@ -36,7 +37,7 @@ func (u userRepositoryImpl) UpdateUser(ctx context.Context, users entity.User) e
 		helper.HelperIfError(err)
 	} else {
 		fmt.Println("TIDAK DITEMUKAN")
-		helper.NotFound("ID not found", "Masukan ID user yang ada")
+		helper.NotFound("userID "+strconv.FormatUint(users.UserID, 10)+" not found", "Masukan ID user yang ada")
 	}
 
 	SQLQUERY = "UPDATE yearbook_db.user SET email = ?, password = ?, image = ?, nickname = ? WHERE userID = ?"
