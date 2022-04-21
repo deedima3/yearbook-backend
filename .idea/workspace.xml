@@ -4,8 +4,18 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a79ab686-3775-4ae0-bfd5-e59544be5625" name="Changes" comment="User Registration flow">
+    <list default="true" id="a79ab686-3775-4ae0-bfd5-e59544be5625" name="Changes" comment="User Registration flow&#10;- lowercase folder User">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/global/api_paths.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/global/api_paths.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user/controller/user_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/controller/user_controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user/dto/user_request_dto.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/dto/user_request_dto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user/dto/user_response_dto.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/dto/user_response_dto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user/entity/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/entity/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user/helper/helper.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/helper/helper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user/repository/api/user_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/repository/api/user_repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user/repository/impl/user_repository_impl.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/repository/impl/user_repository_impl.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user/service/api/user_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/service/api/user_service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user/service/impl/user_service_impl.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/service/impl/user_service_impl.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,14 +76,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Go Build.go build github.com/deedima3/yearbook-backend/cmd/main">
-    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
-      <module name="yearbook-backend" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="FILE" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
     <configuration name="go build github.com/deedima3/yearbook-backend/cmd/main" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="yearbook-backend" />
       <working_directory value="$PROJECT_DIR$" />
@@ -90,15 +92,6 @@
       <package value="github.com/deedima3/yearbook-backend" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$/cmd/main/main.go" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
-      <module name="yearbook-backend" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="DIRECTORY" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -129,7 +122,8 @@
     <MESSAGE value="Update" />
     <MESSAGE value="User Added" />
     <MESSAGE value="User Registration flow" />
-    <option name="LAST_COMMIT_MESSAGE" value="User Registration flow" />
+    <MESSAGE value="User Registration flow&#10;- lowercase folder User" />
+    <option name="LAST_COMMIT_MESSAGE" value="User Registration flow&#10;- lowercase folder User" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

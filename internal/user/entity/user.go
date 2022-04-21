@@ -9,5 +9,3 @@ type User struct {
 	Nickname string `db:"nickname"`
 	Nim      string `db:"nim"`
 }
-
-type Users []*User
