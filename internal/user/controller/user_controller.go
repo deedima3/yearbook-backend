@@ -8,6 +8,7 @@ import (
 	userServicePkg "github.com/deedima3/yearbook-backend/internal/user/service/api"
 	"github.com/gorilla/mux"
 	"net/http"
+	"strconv"
 )
 
 type UserController struct {
@@ -30,7 +31,14 @@ func (u *UserController) UpdateUser(rw http.ResponseWriter, r *http.Request) {
 	helper.BadRequest(err, "body format", "invalid Json format")
 
 	_ = u.us.SaveUser(r.Context(), *userUpdate)
-	sicgolib.NewBaseResponse(204, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, "success").ToJSON(rw)
+
+	tokenJWT := struct {
+		Accesstoken string `json:"accesstoken"`
+	}{
+		Accesstoken: helper.JwtTokenGenerate(strconv.FormatUint(userUpdate.UserID, 10), userUpdate.Nickname),
+	}
+
+	sicgolib.NewBaseResponse(204, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, tokenJWT).ToJSON(rw)
 }
 
 func (u UserController) AllUser(rw http.ResponseWriter, r *http.Request) {

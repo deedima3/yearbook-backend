@@ -4,8 +4,11 @@ import (
 	"github.com/SIC-Unud/sicgolib"
 	"github.com/deedima3/yearbook-backend/internal/user/dto"
 	"github.com/deedima3/yearbook-backend/internal/user/entity"
+	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
+	"os"
+	"time"
 )
 
 func HelperIfError(err error) {
@@ -56,4 +59,18 @@ func ToUserResponse(user entity.User) dto.UsersResponse {
 		Nickname: user.Nickname,
 		Password: user.Password,
 	}
+}
+
+func JwtTokenGenerate(ID, Nickname string) string {
+	claims := jwt.MapClaims{
+		"id":       ID,
+		"nickname": Nickname,
+		"exp":      time.Now().Add(time.Hour * 24).Unix(),
+	}
+	// Create token
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	// Generate encoded token and send it as response.
+	t, err := token.SignedString([]byte(os.Getenv("SECRET")))
+	HelperIfError(err)
+	return t
 }
