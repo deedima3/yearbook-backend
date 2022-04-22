@@ -6,5 +6,7 @@ import (
 )
 
 type UserRepository interface {
+	AllUser(ctx context.Context) []entity.User
 	InsertNewUser(ctx context.Context, user entity.User) error
+	UpdateUser(ctx context.Context, users entity.User) error
 }
