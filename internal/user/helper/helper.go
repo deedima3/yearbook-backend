@@ -74,3 +74,11 @@ func JwtTokenGenerate(ID, Nickname string) string {
 	HelperIfError(err)
 	return t
 }
+
+func WrongPass() {
+	panic(sicgolib.NewErrorResponse(
+		http.StatusBadRequest,
+		sicgolib.RESPONSE_ERROR_UNAUTHORIZED_MESSAGE,
+		sicgolib.NewErrorResponseValue("Password", "User found but password didn't match"),
+	))
+}
