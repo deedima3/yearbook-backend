@@ -58,7 +58,7 @@ func (u UserController) Login(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	if id != 0 {
-		sicgolib.NewBaseResponse(204, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, tokenJWT).ToJSON(rw)
+		sicgolib.NewBaseResponse(200, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, tokenJWT).ToJSON(rw)
 	} else {
 		helper.WrongPass()
 	}
