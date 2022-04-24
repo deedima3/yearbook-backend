@@ -20,6 +20,15 @@ type UserUpdateRequestBody struct {
 	Nim      string `json:"nim"`
 }
 
+type LoginRequestBody struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+func (u *LoginRequestBody) FromJSON(r io.Reader) error {
+	return json.NewDecoder(r).Decode(u)
+}
+
 func (u *UserRegisterRequestBody) FromJSON(r io.Reader) error {
 	return json.NewDecoder(r).Decode(u)
 }

@@ -48,3 +48,13 @@ func (u userServiceImpl) GetAllUser(ctx context.Context) []dto.UsersResponse {
 	}
 	return usersResponses
 }
+
+func (u userServiceImpl) PassForLogin(ctx context.Context, body dto.LoginRequestBody) (uint64, string) {
+	userID, nickname, Pass := u.ur.GetUserPass(ctx, body.Email)
+	resComp := helper.CheckPasswordHash(body.Password, Pass)
+	if resComp {
+		return userID, nickname
+	} else {
+		return 0, "None" // If email not found, function return 0 as default
+	}
+}
