@@ -75,6 +75,30 @@ func JwtTokenGenerate(ID, Nickname string) string {
 	return t
 }
 
+func JwtDecoder(tokenString string) (string, string) {
+	claims := jwt.MapClaims{}
+	_, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+		return []byte(os.Getenv("SECRET")), nil
+	})
+	BadRequest(err, "Invalid JWT", "Invalid JWT token, please input yang bener")
+	var id, nickname string
+	for key, _ := range claims {
+		if key == "exp" {
+			continue
+		}
+		if key == "id" {
+			continue
+		}
+		if key == "nickname" {
+			continue
+		}
+		sicgolib.NewBaseResponse(400, sicgolib.RESPONSE_ERROR_UNAUTHORIZED_MESSAGE, nil, nil)
+	}
+	id = claims["id"].(string)
+	nickname = claims["nickname"].(string)
+	return id, nickname
+}
+
 func WrongPass() {
 	panic(sicgolib.NewErrorResponse(
 		http.StatusBadRequest,
