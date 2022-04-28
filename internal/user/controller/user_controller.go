@@ -64,12 +64,33 @@ func (u UserController) Login(rw http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (u UserController) RefreshToken(rw http.ResponseWriter, r *http.Request) {
+	var id, nickname string
+	if r.Header.Get("Token") == "" {
+		panic(sicgolib.NewErrorResponse(
+			http.StatusBadRequest,
+			sicgolib.RESPONSE_ERROR_BUSINESS_LOGIC_MESSAGE,
+			sicgolib.NewErrorResponseValue("Wrong Key", "Key must be named 'Token' "),
+		))
+	}
+	id, nickname = helper.JwtDecoder(r.Header.Get("Token"))
+	newToken := helper.JwtTokenGenerate(id, nickname)
+	tokenJWT := struct {
+		Accesstoken string `json:"accesstoken"`
+	}{
+		Accesstoken: newToken,
+	}
+	rw.Header().Add("Token", newToken)
+	sicgolib.NewBaseResponse(200, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, tokenJWT).ToJSON(rw)
+}
+
 func (uc *UserController) InitializeController() {
 	//Add your routes here
 	uc.router.HandleFunc(global.API_INSERT_USER, uc.CreateUser).Methods(http.MethodPost)
 	uc.router.HandleFunc(global.API_UPDATE_USER, uc.UpdateUser).Methods(http.MethodPost)
 	uc.router.HandleFunc(global.API_ALL_USER, uc.AllUser).Methods(http.MethodGet)
 	uc.router.HandleFunc(global.API_LOGIN, uc.Login).Methods(http.MethodPost)
+	uc.router.HandleFunc(global.API_REFRESH_TOKEN, uc.RefreshToken).Methods(http.MethodPost)
 }
 
 func ProvideUserController(router *mux.Router, us userServicePkg.UserServiceInterface) *UserController {
