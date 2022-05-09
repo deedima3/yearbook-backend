@@ -14,9 +14,8 @@ type blogpagesRepositoryImpl struct {
 
 var(
 	GET_USER_PAGE = `
-	SELECT bp.blogID, bp.owner, u.nickname, bp.header_img, bp.description FROM blogpages bp
-	JOIN user u ON u.userID = bp.owner
-	WHERE user.userID = ?
+	SELECT bp.blogID, bp.owner,bp.header_img, bp.description FROM blogpages bp
+	WHERE bp.blogID = ?
 	`
 	CHECK_USER_PAGE_EXISTS = `
 	SELECT blogID FROM blogpages

@@ -1,10 +1,10 @@
 package entity
 
 type BlogPage struct {
-	PageID      uint64
-	HeaderImage string
-	Description string
-	Owner       uint64
+	PageID      uint64 `db:"blogID"`
+	HeaderImage string `db:"header_img"`
+	Description string `db:"description"`
+	Owner       uint64 `db:"owner"`
 }
 
 type User struct {
