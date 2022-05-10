@@ -22,10 +22,34 @@ var(
 	SELECT blogID FROM blogpages
 	WHERE blogID = ?
 	`
+	CHECK_USER_EXISTS = `
+	SELECT userID FROM user
+	WHERE userID = ?
+	`
 )
 
 func ProvideBlogpagesRepository(DB *sql.DB) *blogpagesRepositoryImpl{
 	return &blogpagesRepositoryImpl{DB: DB}
+}
+
+func(br blogpagesRepositoryImpl) CheckUserExist(ctx context.Context, id uint64)(bool, error){
+	query := CHECK_USER_EXISTS
+	stmt, err := br.DB.PrepareContext(ctx, query)
+	if err != nil {
+		log.Printf("ERROR CheckUserExists -> error: %v\n", err)
+		return false, err
+	}
+	
+	rows, err := stmt.Query(id)
+	if err != nil {
+		log.Printf("ERROR CheckUserExists -> error: %v\n", err)
+		return false, err
+	}
+
+	if rows.Next(){
+		return true, nil
+	}
+	return false, nil
 }
 
 func(br blogpagesRepositoryImpl)CheckUserPage(ctx context.Context, id uint64)(bool, error){
