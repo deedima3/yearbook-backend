@@ -7,6 +7,6 @@ import (
 )
 
 type BlogPageRepository interface {
-	ViewUserPages(ctx context.Context, userID uint64) (entity.BlogPages, error)
+	ViewUserPages(ctx context.Context, userID uint64)(entity.BlogPagesPeopleJoined, error)
 	CheckUserPage(ctx context.Context, id uint64)(bool, error)
 }

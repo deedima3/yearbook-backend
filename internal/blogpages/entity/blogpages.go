@@ -17,5 +17,11 @@ type User struct {
 	Nim      string `db:"nim"`
 }
 
+type BlogPageUserJoined struct {
+	User
+	BlogPage
+}
+
+type BlogPagesPeopleJoined []*BlogPageUserJoined
 type Users []*User
 type BlogPages []*BlogPage

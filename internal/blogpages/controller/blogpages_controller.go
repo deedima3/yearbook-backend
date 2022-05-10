@@ -17,7 +17,7 @@ type BlogpagesController struct {
 
 func(bpc *BlogpagesController)viewUserPages(rw http.ResponseWriter, r *http.Request){
 	queryVar := mux.Vars(r)
-	userID := queryVar["blogID"]
+	userID := queryVar["userID"]
 	idConv, _ := strconv.ParseUint(userID, 10, 64)
 
 	userPages, err := bpc.bps.ViewUserPages(r.Context(), idConv)
