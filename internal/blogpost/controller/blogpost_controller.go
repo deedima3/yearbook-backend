@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/SIC-Unud/sicgolib"
 	"github.com/deedima3/yearbook-backend/internal/blogpost/dto"
@@ -13,6 +14,22 @@ import (
 type BlogpostController struct {
 	router *mux.Router
 	bs blogpostServicePkg.BlogpostService
+}
+
+func(bc *BlogpostController) deletePost(rw http.ResponseWriter, r *http.Request){
+	routerVar := mux.Vars(r)
+	postIDVar := routerVar["postID"]
+	postIDConv, _ := strconv.ParseUint(postIDVar, 10, 64)
+
+	deleteBlogPost := bc.bs.DeletePostByID(r.Context(), postIDConv)
+	if deleteBlogPost != nil {
+		panic(sicgolib.NewErrorResponse(
+			http.StatusInternalServerError,
+			http.StatusText(http.StatusInternalServerError),
+			sicgolib.NewErrorResponseValue("server error", deleteBlogPost.Error()),
+		))
+	}
+	sicgolib.NewBaseResponse(200, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, "Deleted").ToJSON(rw)
 }
 
 func(bc *BlogpostController) createPost(rw http.ResponseWriter, r *http.Request){
@@ -33,6 +50,7 @@ func(bc *BlogpostController) createPost(rw http.ResponseWriter, r *http.Request)
 func(bc *BlogpostController) InitializeController() {
 	//Add your routes here
 	bc.router.HandleFunc(global.API_INSERT_POST, bc.createPost).Methods(http.MethodPost)
+	bc.router.HandleFunc(global.API_DELETE_POST, bc.deletePost).Methods(http.MethodDelete)
 }
 
 func ProvideBlogpostController(router *mux.Router, bs blogpostServicePkg.BlogpostService) *BlogpostController{
