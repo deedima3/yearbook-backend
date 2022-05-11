@@ -1,14 +1,15 @@
 package helper
 
 import (
+	"net/http"
+	"os"
+	"time"
+
 	"github.com/SIC-Unud/sicgolib"
 	"github.com/deedima3/yearbook-backend/internal/user/dto"
 	"github.com/deedima3/yearbook-backend/internal/user/entity"
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
-	"net/http"
-	"os"
-	"time"
 )
 
 func HelperIfError(err error) {
@@ -82,7 +83,7 @@ func JwtDecoder(tokenString string) (string, string) {
 	})
 	BadRequest(err, "Invalid JWT", "Invalid JWT token, please input yang bener")
 	var id, nickname string
-	for key, _ := range claims {
+	for key := range claims {
 		if key == "exp" {
 			continue
 		}

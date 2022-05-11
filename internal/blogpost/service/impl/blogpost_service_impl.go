@@ -17,6 +17,24 @@ func ProvideRegistrationRepository(rr repositoryApiPkg.BlogpostRepository) *blog
 	return &blogpostServiceImpl{rr:rr}
 }
 
+func(bs blogpostServiceImpl)DeletePostByID(ctx context.Context, postID uint64) error{
+	check, err := bs.rr.CheckPostExists(ctx, postID)
+	if err != nil {
+		panic(sicgolib.NewErrorResponse(500, sicgolib.RESPONSE_ERROR_RUNTIME_MESSAGE,
+			sicgolib.NewErrorResponseValue("delete post", "internal server error: "+err.Error())))
+	}
+	if !check || err != nil {
+		panic(sicgolib.NewErrorResponse(404, sicgolib.RESPONSE_ERROR_DATA_NOT_EXISTS_MESSAGE,
+			sicgolib.NewErrorResponseValue("post", "does not exist")))
+	}
+	err = bs.rr.DeletePostByID(ctx, postID)
+	if err != nil {
+		panic(sicgolib.NewErrorResponse(500, sicgolib.RESPONSE_ERROR_RUNTIME_MESSAGE,
+			sicgolib.NewErrorResponseValue("delete post", "internal server error: "+err.Error())))
+	}
+	return nil
+}
+
 func(bs blogpostServiceImpl)CreatePost(ctx context.Context, br dto.BlogPostRequestBody)(uint64, error){
 	blogID, err := bs.rr.InsertNewPost(ctx, entity.Blogpost{
 		Content: br.Content,

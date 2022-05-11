@@ -22,7 +22,43 @@ const(
 	(content, pages)
 	VALUES(?, ?);
 	`
+	DELETE_POST = `
+	DELETE FROM blogpost
+	WHERE postID = ?;
+	`
+	CHECK_POST_EXISTS =`
+	SELECT postID FROM blogpost
+	WHERE postID = ?;
+	`
 )
+
+func(b blogpostRepositoryImpl) DeletePostByID(ctx context.Context, id uint64) error {
+	query := DELETE_POST
+	_, err := b.DB.Query(query, id)
+	if err != nil {
+		log.Printf("ERROR DeletePostByID -> error: %v\n", err)
+		return err
+	}
+	return nil
+}
+
+func(b blogpostRepositoryImpl) CheckPostExists(ctx context.Context, id uint64)(bool, error){
+	query := CHECK_POST_EXISTS
+	stmt, err := b.DB.PrepareContext(ctx, query)
+	if err != nil {
+		log.Printf("ERROR CheckPostExists -> error: %v\n", err)
+		return false, err
+	}
+	rows, err := stmt.Query(id)
+	if err != nil {
+		log.Printf("ERROR CheckPostExists -> error: %v\n", err)
+		return false, err
+	}
+	if rows.Next(){
+		return true, nil
+	}
+	return false, nil
+}
 
 func(b blogpostRepositoryImpl)InsertNewPost(ctx context.Context, bp entity.Blogpost)(uint64, error){
 	query := INSERT_NEW_POST
