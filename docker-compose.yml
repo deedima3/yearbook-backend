@@ -1,0 +1,15 @@
+version: '3.9'
+services:
+  backend:
+    container_name: yearbook_backend
+    image: yearbook/yearbook_backend_img
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    networks:
+      - yearbook_network
+networks:
+  yearbook_network:
+    name: POLL_NET
