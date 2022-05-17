@@ -5,11 +5,9 @@ services:
     image: yearbook/yearbook_backend_img
     build: .
     ports:
-      - "5000:5000"
-    depends_on:
-      - db
+      - "8080:8080"
     networks:
       - yearbook_network
 networks:
   yearbook_network:
-    name: POLL_NET
+    name: YEAR_NET
