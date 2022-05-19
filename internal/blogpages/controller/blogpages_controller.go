@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"github.com/deedima3/yearbook-backend/internal/blogpages/dto"
+	"github.com/deedima3/yearbook-backend/internal/user/helper"
 	"net/http"
 	"strconv"
 
@@ -12,10 +14,10 @@ import (
 
 type BlogpagesController struct {
 	router *mux.Router
-	bps blogpagesServicePkg.BlogpagesService
+	bps    blogpagesServicePkg.BlogpagesService
 }
 
-func(bpc *BlogpagesController)viewUserPages(rw http.ResponseWriter, r *http.Request){
+func (bpc *BlogpagesController) viewUserPages(rw http.ResponseWriter, r *http.Request) {
 	queryVar := mux.Vars(r)
 	userID := queryVar["userID"]
 	idConv, _ := strconv.ParseUint(userID, 10, 64)
@@ -30,10 +32,20 @@ func(bpc *BlogpagesController)viewUserPages(rw http.ResponseWriter, r *http.Requ
 	sicgolib.NewBaseResponse(200, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, userPages).SendResponse(&rw)
 }
 
-func(bpc *BlogpagesController)InitializeController(){
-	bpc.router.HandleFunc(global.API_GET_USER_PAGES, bpc.viewUserPages).Methods(http.MethodGet)
+func (u BlogpagesController) NewBlogpage(rw http.ResponseWriter, r *http.Request) {
+	bodyNewBlogpage := new(dto.RequestNewBlogpage)
+	err := bodyNewBlogpage.FromJSON(r.Body)
+	helper.BadRequest(err, "Body format", "Invalid Json format")
+	err = u.bps.NewUserPages(r.Context(), *bodyNewBlogpage)
+	helper.HelperIfError(err)
+	sicgolib.NewBaseResponse(200, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, "success").SendResponse(&rw)
 }
 
-func ProvideBlogpagesController(router *mux.Router, bps blogpagesServicePkg.BlogpagesService) *BlogpagesController{
+func (bpc *BlogpagesController) InitializeController() {
+	bpc.router.HandleFunc(global.API_GET_USER_PAGES, bpc.viewUserPages).Methods(http.MethodGet)
+	bpc.router.HandleFunc(global.API_NEW_BLOGPAGE, bpc.NewBlogpage).Methods(http.MethodPost)
+}
+
+func ProvideBlogpagesController(router *mux.Router, bps blogpagesServicePkg.BlogpagesService) *BlogpagesController {
 	return &BlogpagesController{router: router, bps: bps}
 }

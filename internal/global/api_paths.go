@@ -10,4 +10,5 @@ const (
 	API_LOGIN          = "/login"
 	API_REFRESH_TOKEN  = "/refresh"
 	API_DELETE_POST    = "/twits/{postID}"
+	API_NEW_BLOGPAGE   = "/pages"
 )
