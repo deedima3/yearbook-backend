@@ -2,6 +2,8 @@ package impl
 
 import (
 	"context"
+	"github.com/deedima3/yearbook-backend/internal/blogpages/entity"
+	"github.com/deedima3/yearbook-backend/internal/user/helper"
 	"log"
 
 	"github.com/SIC-Unud/sicgolib"
@@ -13,11 +15,11 @@ type blogpageServiceImpl struct {
 	rr repositoryApiPkg.BlogPageRepository
 }
 
-func ProvideRegistrationRepository(rr repositoryApiPkg.BlogPageRepository) *blogpageServiceImpl{	
+func ProvideRegistrationRepository(rr repositoryApiPkg.BlogPageRepository) *blogpageServiceImpl {
 	return &blogpageServiceImpl{rr: rr}
 }
 
-func(bp blogpageServiceImpl)ViewUserPages(ctx context.Context, id uint64)(dto.BlogPagesResponse, error){
+func (bp blogpageServiceImpl) ViewUserPages(ctx context.Context, id uint64) (dto.BlogPagesResponse, error) {
 	checkUser, err := bp.rr.CheckUserExist(ctx, id)
 	if err != nil {
 		log.Printf("ERROR ViewUserPages -> error: %v\n", err)
@@ -46,4 +48,15 @@ func(bp blogpageServiceImpl)ViewUserPages(ctx context.Context, id uint64)(dto.Bl
 		return nil, err
 	}
 	return *dto.CreateBlogPagesResponse(userPages), err
+}
+
+func (bp blogpageServiceImpl) NewUserPages(ctx context.Context, blogpage dto.RequestNewBlogpage) error {
+	page := entity.BlogPage{
+		HeaderImage: blogpage.Header_img_path,
+		Description: blogpage.Description,
+		Owner:       uint64(blogpage.UserID),
+	}
+	_, err := bp.rr.CreateUserPage(ctx, page)
+	helper.HelperIfError(err)
+	return nil
 }

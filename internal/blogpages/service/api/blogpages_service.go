@@ -7,5 +7,6 @@ import (
 )
 
 type BlogpagesService interface {
-	ViewUserPages(ctx context.Context, id uint64)(dto.BlogPagesResponse, error)
+	ViewUserPages(ctx context.Context, id uint64) (dto.BlogPagesResponse, error)
+	NewUserPages(ctx context.Context, blogpage dto.RequestNewBlogpage) error
 }

@@ -5,14 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a79ab686-3775-4ae0-bfd5-e59544be5625" name="Changes" comment="User Login Flow 2&#10;Fix error code response">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_19_22,_8_37_AM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_19_22__8_37_AM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/blogpages/controller/blogpages_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/blogpages/controller/blogpages_controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/blogpages/dto/blogpages_request_dto.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/blogpages/dto/blogpages_request_dto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/blogpages/repository/api/blogpages_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/blogpages/repository/api/blogpages_repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/blogpages/repository/impl/blogpages_repository_impl.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/blogpages/repository/impl/blogpages_repository_impl.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/blogpages/service/api/blogpages_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/blogpages/service/api/blogpages_service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/blogpages/service/impl/blogpages_service_impl.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/blogpages/service/impl/blogpages_service_impl.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/global/api_paths.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/global/api_paths.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/user/controller/user_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/controller/user_controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/user/helper/helper.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/helper/helper.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
