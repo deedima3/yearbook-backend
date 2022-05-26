@@ -9,4 +9,5 @@ import (
 type BlogpostService interface {
 	DeletePostByID(ctx context.Context, postID uint64) error
 	CreatePost(ctx context.Context, br dto.BlogPostRequestBody) (uint64, error)
+	ViewUpvoteDownvote(ctx context.Context, postID uint64)(dto.UpvoteDownvoteResponses, error)
 }

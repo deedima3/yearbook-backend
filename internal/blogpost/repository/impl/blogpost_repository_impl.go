@@ -30,7 +30,44 @@ const(
 	SELECT postID FROM blogpost
 	WHERE postID = ?;
 	`
+	SELECT_UPVOTE_DOWNVOTE=`
+	SELECT upvote, downvote FROM blogpost
+	WHERE postID = ?;
+	`
 )
+
+func (b blogpostRepositoryImpl)ViewUpvoteDownvote(ctx context.Context, id uint64) (entity.BlogPosts, error) {
+	query := SELECT_UPVOTE_DOWNVOTE
+	stmt, err := b.DB.PrepareContext(ctx, query)
+	if err != nil {
+		log.Printf("ERROR ViewUpvoteDownvote -> error: %v\n", err)
+		return nil, err
+	}
+	rows, err := stmt.Query(id)
+	if err != nil {
+		log.Printf("ERROR ViewUpvoteDownvote -> error: %v\n", err)
+		return nil, err
+	}
+
+	blogposts := entity.BlogPosts{}
+
+	for rows.Next() {
+		var blogpost entity.Blogpost
+
+		err := rows.Scan(
+			&blogpost.Upvote,
+			&blogpost.Downvote,
+		)
+		
+		if err != nil {
+			log.Printf("ERROR ViewUpvoteDownvote -> error: %v\n", err)
+			return nil, err
+		}
+
+		blogposts = append(blogposts, &blogpost)
+	}
+	return blogposts, nil
+}
 
 func(b blogpostRepositoryImpl) DeletePostByID(ctx context.Context, id uint64) error {
 	query := DELETE_POST
