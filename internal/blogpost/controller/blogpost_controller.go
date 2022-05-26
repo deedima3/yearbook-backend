@@ -16,6 +16,22 @@ type BlogpostController struct {
 	bs blogpostServicePkg.BlogpostService
 }
 
+func(bc *BlogpostController) viewUpvoteDownvote(rw http.ResponseWriter, r *http.Request){
+	routerVar := mux.Vars(r)
+	postIDVar := routerVar["postID"]
+	postIDConv, _ := strconv.ParseUint(postIDVar, 10, 64)
+
+	postVote, err := bc.bs.ViewUpvoteDownvote(r.Context(), postIDConv)
+	if err != nil {
+		panic(sicgolib.NewErrorResponse(
+			http.StatusBadRequest,
+			sicgolib.RESPONSE_ERROR_BUSINESS_LOGIC_MESSAGE,
+			sicgolib.NewErrorResponseValue("internal", "server error"),
+		))
+	}
+	sicgolib.NewBaseResponse(200, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, postVote).ToJSON(rw)
+}
+
 func(bc *BlogpostController) deletePost(rw http.ResponseWriter, r *http.Request){
 	routerVar := mux.Vars(r)
 	postIDVar := routerVar["postID"]
@@ -51,6 +67,7 @@ func(bc *BlogpostController) InitializeController() {
 	//Add your routes here
 	bc.router.HandleFunc(global.API_INSERT_POST, bc.createPost).Methods(http.MethodPost)
 	bc.router.HandleFunc(global.API_DELETE_POST, bc.deletePost).Methods(http.MethodDelete)
+	bc.router.HandleFunc(global.API_VIEW_VOTES, bc.viewUpvoteDownvote).Methods(http.MethodGet)
 }
 
 func ProvideBlogpostController(router *mux.Router, bs blogpostServicePkg.BlogpostService) *BlogpostController{
