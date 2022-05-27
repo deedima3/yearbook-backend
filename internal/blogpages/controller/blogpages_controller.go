@@ -1,10 +1,11 @@
 package controller
 
 import (
-	"github.com/deedima3/yearbook-backend/internal/blogpages/dto"
-	"github.com/deedima3/yearbook-backend/internal/user/helper"
 	"net/http"
 	"strconv"
+
+	"github.com/deedima3/yearbook-backend/internal/blogpages/dto"
+	"github.com/deedima3/yearbook-backend/internal/user/helper"
 
 	"github.com/SIC-Unud/sicgolib"
 	blogpagesServicePkg "github.com/deedima3/yearbook-backend/internal/blogpages/service/api"
@@ -42,8 +43,8 @@ func (u BlogpagesController) NewBlogpage(rw http.ResponseWriter, r *http.Request
 }
 
 func (bpc *BlogpagesController) InitializeController() {
-	bpc.router.HandleFunc(global.API_GET_USER_PAGES, bpc.viewUserPages).Methods(http.MethodGet)
-	bpc.router.HandleFunc(global.API_NEW_BLOGPAGE, bpc.NewBlogpage).Methods(http.MethodPost)
+	bpc.router.HandleFunc(global.API_GET_USER_PAGES, bpc.viewUserPages).Methods(http.MethodGet, http.MethodOptions)
+	bpc.router.HandleFunc(global.API_NEW_BLOGPAGE, bpc.NewBlogpage).Methods(http.MethodPost, http.MethodOptions)
 }
 
 func ProvideBlogpagesController(router *mux.Router, bps blogpagesServicePkg.BlogpagesService) *BlogpagesController {

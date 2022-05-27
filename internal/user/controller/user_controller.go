@@ -1,14 +1,15 @@
 package controller
 
 import (
+	"net/http"
+	"strconv"
+
 	"github.com/SIC-Unud/sicgolib"
 	"github.com/deedima3/yearbook-backend/internal/global"
 	"github.com/deedima3/yearbook-backend/internal/user/dto"
 	"github.com/deedima3/yearbook-backend/internal/user/helper"
 	userServicePkg "github.com/deedima3/yearbook-backend/internal/user/service/api"
 	"github.com/gorilla/mux"
-	"net/http"
-	"strconv"
 )
 
 type UserController struct {
@@ -86,11 +87,11 @@ func (u UserController) RefreshToken(rw http.ResponseWriter, r *http.Request) {
 
 func (uc *UserController) InitializeController() {
 	//Add your routes here
-	uc.router.HandleFunc(global.API_INSERT_USER, uc.CreateUser).Methods(http.MethodPost)
-	uc.router.HandleFunc(global.API_UPDATE_USER, uc.UpdateUser).Methods(http.MethodPost)
-	uc.router.HandleFunc(global.API_ALL_USER, uc.AllUser).Methods(http.MethodGet)
-	uc.router.HandleFunc(global.API_LOGIN, uc.Login).Methods(http.MethodPost)
-	uc.router.HandleFunc(global.API_REFRESH_TOKEN, uc.RefreshToken).Methods(http.MethodPost)
+	uc.router.HandleFunc(global.API_INSERT_USER, uc.CreateUser).Methods(http.MethodPost, http.MethodOptions)
+	uc.router.HandleFunc(global.API_UPDATE_USER, uc.UpdateUser).Methods(http.MethodPost, http.MethodOptions)
+	uc.router.HandleFunc(global.API_ALL_USER, uc.AllUser).Methods(http.MethodGet, http.MethodOptions)
+	uc.router.HandleFunc(global.API_LOGIN, uc.Login).Methods(http.MethodPost, http.MethodOptions)
+	uc.router.HandleFunc(global.API_REFRESH_TOKEN, uc.RefreshToken).Methods(http.MethodPost, http.MethodOptions)
 }
 
 func ProvideUserController(router *mux.Router, us userServicePkg.UserServiceInterface) *UserController {
