@@ -28,6 +28,12 @@ func TestCorsMiddeware(t *testing.T) {
 				}
 			},
 		},
+		{
+			name: "CorsMiddleware Case Blacklisted Url",
+			senderHost: "testurl.com",
+			method: "OPTIONS",
+			handler: func(w http.ResponseWriter, r *http.Request) {},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
