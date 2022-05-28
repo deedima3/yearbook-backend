@@ -65,9 +65,9 @@ func(bc *BlogpostController) createPost(rw http.ResponseWriter, r *http.Request)
 
 func(bc *BlogpostController) InitializeController() {
 	//Add your routes here
-	bc.router.HandleFunc(global.API_INSERT_POST, bc.createPost).Methods(http.MethodPost)
-	bc.router.HandleFunc(global.API_DELETE_POST, bc.deletePost).Methods(http.MethodDelete)
-	bc.router.HandleFunc(global.API_VIEW_VOTES, bc.viewUpvoteDownvote).Methods(http.MethodGet)
+	bc.router.HandleFunc(global.API_INSERT_POST, bc.createPost).Methods(http.MethodPost, http.MethodOptions)
+	bc.router.HandleFunc(global.API_DELETE_POST, bc.deletePost).Methods(http.MethodDelete, http.MethodOptions)
+	bc.router.HandleFunc(global.API_VIEW_VOTES, bc.viewUpvoteDownvote).Methods(http.MethodGet, http.MethodOptions)
 }
 
 func ProvideBlogpostController(router *mux.Router, bs blogpostServicePkg.BlogpostService) *BlogpostController{
