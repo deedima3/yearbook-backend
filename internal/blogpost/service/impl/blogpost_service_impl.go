@@ -14,11 +14,11 @@ type blogpostServiceImpl struct {
 	rr repositoryApiPkg.BlogpostRepository
 }
 
-func ProvideRegistrationRepository(rr repositoryApiPkg.BlogpostRepository) *blogpostServiceImpl{
-	return &blogpostServiceImpl{rr:rr}
+func ProvideRegistrationRepository(rr repositoryApiPkg.BlogpostRepository) *blogpostServiceImpl {
+	return &blogpostServiceImpl{rr: rr}
 }
 
-func(bs blogpostServiceImpl)ViewUpvoteDownvote(ctx context.Context, postID uint64)(dto.UpvoteDownvoteResponses, error){
+func (bs blogpostServiceImpl) ViewUpvoteDownvote(ctx context.Context, postID uint64) (dto.UpvoteDownvoteResponses, error) {
 	check, err := bs.rr.CheckPostExists(ctx, postID)
 	if err != nil {
 		panic(sicgolib.NewErrorResponse(500, sicgolib.RESPONSE_ERROR_RUNTIME_MESSAGE,
@@ -36,7 +36,7 @@ func(bs blogpostServiceImpl)ViewUpvoteDownvote(ctx context.Context, postID uint6
 	return *dto.CreateUpvoteDownvoteResponses(vote), err
 }
 
-func(bs blogpostServiceImpl)DeletePostByID(ctx context.Context, postID uint64) error{
+func (bs blogpostServiceImpl) DeletePostByID(ctx context.Context, postID uint64) error {
 	check, err := bs.rr.CheckPostExists(ctx, postID)
 	if err != nil {
 		panic(sicgolib.NewErrorResponse(500, sicgolib.RESPONSE_ERROR_RUNTIME_MESSAGE,
@@ -54,14 +54,17 @@ func(bs blogpostServiceImpl)DeletePostByID(ctx context.Context, postID uint64) e
 	return nil
 }
 
-func(bs blogpostServiceImpl)CreatePost(ctx context.Context, br dto.BlogPostRequestBody)(uint64, error){
+func (bs blogpostServiceImpl) CreatePost(ctx context.Context, br dto.BlogPostRequestBody) (uint64, error) {
 	blogID, err := bs.rr.InsertNewPost(ctx, entity.Blogpost{
-		Content: br.Content,
-		Pages: br.Pages,
+		Content:  br.Content,
+		Pages:    br.Pages,
+		Upvote:   br.Upvote,
+		Downvote: br.Downvote,
+		Title:    br.Title,
 	})
 	if err != nil {
 		panic(sicgolib.NewErrorResponse(500, sicgolib.RESPONSE_ERROR_RUNTIME_MESSAGE,
 			sicgolib.NewErrorResponseValue("create post", "internal server error: "+err.Error())))
 	}
-	return blogID, nil	
+	return blogID, nil
 }
