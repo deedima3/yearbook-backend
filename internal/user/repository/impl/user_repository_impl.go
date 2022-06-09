@@ -4,10 +4,11 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/deedima3/yearbook-backend/internal/user/entity"
-	"github.com/deedima3/yearbook-backend/internal/user/helper"
 	"strconv"
 	"strings"
+
+	"github.com/deedima3/yearbook-backend/internal/user/entity"
+	"github.com/deedima3/yearbook-backend/internal/user/helper"
 )
 
 type userRepositoryImpl struct {
@@ -50,13 +51,13 @@ func (u userRepositoryImpl) UpdateUser(ctx context.Context, users entity.User) e
 }
 
 func (u userRepositoryImpl) AllUser(ctx context.Context) []entity.User {
-	SQLQUERY := "SELECT userID, email, nickname, password FROM yearbook_db.user"
+	SQLQUERY := "SELECT userID, email, nickname FROM yearbook_db.user"
 	rows, err := u.DB.QueryContext(ctx, SQLQUERY)
 	helper.HelperIfError(err)
 	var users []entity.User
 	for rows.Next() {
 		user := entity.User{}
-		err := rows.Scan(&user.UserID, &user.Email, &user.Nickname, &user.Password)
+		err := rows.Scan(&user.UserID, &user.Email, &user.Nickname)
 		helper.HelperIfError(err)
 		users = append(users, user)
 	}
