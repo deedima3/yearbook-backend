@@ -6,6 +6,7 @@ type Blogpost struct {
 	Upvote   uint64 `db:"upvote"`
 	Downvote uint64 `db:"downvote"`
 	Pages    uint64 `db:"pages"`
+	Title    string `db:"title"`
 }
 
 type BlogPosts []*Blogpost

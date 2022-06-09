@@ -20,8 +20,8 @@ func ProvideBlogpostRepository(DB *sql.DB) *blogpostRepositoryImpl {
 const (
 	INSERT_NEW_POST = `
 	INSERT INTO yearbook_db.blogpost
-	(content, pages)
-	VALUES(?, ?);
+	(content, pages, upvote, downvote, title)
+	VALUES(?, ?, ?, ?, ?);
 	`
 	DELETE_POST = `
 	DELETE FROM blogpost
@@ -143,7 +143,7 @@ func (b blogpostRepositoryImpl) InsertNewPost(ctx context.Context, bp entity.Blo
 		log.Printf("ERROR InsertNewPost -> error: %v\n", err)
 		return 0, err
 	}
-	res, err := stmt.ExecContext(ctx, bp.Content, bp.Pages)
+	res, err := stmt.ExecContext(ctx, bp.Content, bp.Pages, bp.Upvote, bp.Downvote, bp.Title)
 	if err != nil {
 		log.Printf("ERROR InsertNewPost -> error: %v\n", err)
 		return 0, err

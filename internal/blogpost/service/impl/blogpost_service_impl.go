@@ -56,8 +56,11 @@ func (bs blogpostServiceImpl) DeletePostByID(ctx context.Context, postID uint64)
 
 func (bs blogpostServiceImpl) CreatePost(ctx context.Context, br dto.BlogPostRequestBody) (uint64, error) {
 	blogID, err := bs.rr.InsertNewPost(ctx, entity.Blogpost{
-		Content: br.Content,
-		Pages:   br.Pages,
+		Content:  br.Content,
+		Pages:    br.Pages,
+		Upvote:   br.Upvote,
+		Downvote: br.Downvote,
+		Title:    br.Title,
 	})
 	if err != nil {
 		panic(sicgolib.NewErrorResponse(500, sicgolib.RESPONSE_ERROR_RUNTIME_MESSAGE,

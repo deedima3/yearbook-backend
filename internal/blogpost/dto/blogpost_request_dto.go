@@ -9,8 +9,11 @@ import (
 )
 
 type BlogPostRequestBody struct {
-	Content string `json:"content"`
-	Pages   uint64 `json:"pages"`
+	Content  string `json:"content"`
+	Pages    uint64 `json:"pages"`
+	Upvote   uint64 `json:"upvote"`
+	Downvote uint64 `json:"downvote"`
+	Title    string `json:"title"`
 }
 
 type BlogPostVotesRequestBody struct {

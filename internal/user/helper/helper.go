@@ -58,7 +58,6 @@ func ToUserResponse(user entity.User) dto.UsersResponse {
 		UserID:   user.UserID,
 		Email:    user.Email,
 		Nickname: user.Nickname,
-		Password: user.Password,
 	}
 }
 
