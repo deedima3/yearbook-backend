@@ -12,4 +12,5 @@ const (
 	API_DELETE_POST    = "/twits/{postID}"
 	API_NEW_BLOGPAGE   = "/pages"
 	API_VIEW_VOTES     = "/twits/{postID}"
+	API_UPDATE_VOTES   = "/vote"
 )

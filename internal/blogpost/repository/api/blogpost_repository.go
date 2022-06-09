@@ -7,8 +7,10 @@ import (
 )
 
 type BlogpostRepository interface {
-	CheckPostExists(ctx context.Context, id uint64)(bool, error)
-	DeletePostByID(ctx context.Context, id uint64)error
-	InsertNewPost(ctx context.Context, bp entity.Blogpost)(uint64, error)
+	CheckPostExists(ctx context.Context, id uint64) (bool, error)
+	DeletePostByID(ctx context.Context, id uint64) error
+	InsertNewPost(ctx context.Context, bp entity.Blogpost) (uint64, error)
 	ViewUpvoteDownvote(ctx context.Context, id uint64) (entity.BlogPosts, error)
+	UpdateUpvote(ctx context.Context, postID uint64) error
+	UpdateDownvote(ctx context.Context, postID uint64) error
 }
