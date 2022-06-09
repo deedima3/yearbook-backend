@@ -68,3 +68,22 @@ func (bs blogpostServiceImpl) CreatePost(ctx context.Context, br dto.BlogPostReq
 	}
 	return blogID, nil
 }
+
+func (bs blogpostServiceImpl) UpdateVotes(ctx context.Context, bv dto.BlogPostVotesRequestBody) (string, error) {
+	if bv.Action == "up" {
+		err := bs.rr.UpdateUpvote(ctx, bv.PostID)
+		if err != nil {
+			panic(sicgolib.NewErrorResponse(500, sicgolib.RESPONSE_ERROR_RUNTIME_MESSAGE,
+				sicgolib.NewErrorResponseValue("upvote", "internal server error: "+err.Error())))
+		}
+		return "upvote sukses", nil
+	} else if bv.Action == "down" {
+		err := bs.rr.UpdateDownvote(ctx, bv.PostID)
+		if err != nil {
+			panic(sicgolib.NewErrorResponse(500, sicgolib.RESPONSE_ERROR_RUNTIME_MESSAGE,
+				sicgolib.NewErrorResponseValue("downvote", "internal server error: "+err.Error())))
+		}
+		return "downvote sukses", nil
+	}
+	return "update sukses", nil
+}

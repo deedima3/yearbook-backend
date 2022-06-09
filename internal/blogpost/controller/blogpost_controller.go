@@ -13,10 +13,10 @@ import (
 
 type BlogpostController struct {
 	router *mux.Router
-	bs blogpostServicePkg.BlogpostService
+	bs     blogpostServicePkg.BlogpostService
 }
 
-func(bc *BlogpostController) viewUpvoteDownvote(rw http.ResponseWriter, r *http.Request){
+func (bc *BlogpostController) viewUpvoteDownvote(rw http.ResponseWriter, r *http.Request) {
 	routerVar := mux.Vars(r)
 	postIDVar := routerVar["postID"]
 	postIDConv, _ := strconv.ParseUint(postIDVar, 10, 64)
@@ -32,7 +32,7 @@ func(bc *BlogpostController) viewUpvoteDownvote(rw http.ResponseWriter, r *http.
 	sicgolib.NewBaseResponse(200, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, postVote).ToJSON(rw)
 }
 
-func(bc *BlogpostController) deletePost(rw http.ResponseWriter, r *http.Request){
+func (bc *BlogpostController) deletePost(rw http.ResponseWriter, r *http.Request) {
 	routerVar := mux.Vars(r)
 	postIDVar := routerVar["postID"]
 	postIDConv, _ := strconv.ParseUint(postIDVar, 10, 64)
@@ -48,7 +48,7 @@ func(bc *BlogpostController) deletePost(rw http.ResponseWriter, r *http.Request)
 	sicgolib.NewBaseResponse(200, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, "Deleted").ToJSON(rw)
 }
 
-func(bc *BlogpostController) createPost(rw http.ResponseWriter, r *http.Request){
+func (bc *BlogpostController) createPost(rw http.ResponseWriter, r *http.Request) {
 	postRequest := new(dto.BlogPostRequestBody)
 
 	if err := postRequest.FromJSON(r.Body); err != nil {
@@ -63,13 +63,29 @@ func(bc *BlogpostController) createPost(rw http.ResponseWriter, r *http.Request)
 	sicgolib.NewBaseResponse(201, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, blogID).ToJSON(rw)
 }
 
-func(bc *BlogpostController) InitializeController() {
+func (bc *BlogpostController) updateVotes(rw http.ResponseWriter, r *http.Request) {
+	voteRequest := new(dto.BlogPostVotesRequestBody)
+
+	if err := voteRequest.FromJSON(r.Body); err != nil {
+		panic(sicgolib.NewErrorResponse(
+			http.StatusBadRequest,
+			sicgolib.RESPONSE_ERROR_BUSINESS_LOGIC_MESSAGE,
+			sicgolib.NewErrorResponseValue("request body", "invalid json format"),
+		))
+	}
+
+	msg, _ := bc.bs.UpdateVotes(r.Context(), *voteRequest)
+	sicgolib.NewBaseResponse(201, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, msg).ToJSON(rw)
+}
+
+func (bc *BlogpostController) InitializeController() {
 	//Add your routes here
 	bc.router.HandleFunc(global.API_INSERT_POST, bc.createPost).Methods(http.MethodPost, http.MethodOptions)
 	bc.router.HandleFunc(global.API_DELETE_POST, bc.deletePost).Methods(http.MethodDelete, http.MethodOptions)
 	bc.router.HandleFunc(global.API_VIEW_VOTES, bc.viewUpvoteDownvote).Methods(http.MethodGet, http.MethodOptions)
+	bc.router.HandleFunc(global.API_UPDATE_VOTES, bc.updateVotes).Methods(http.MethodPatch, http.MethodOptions)
 }
 
-func ProvideBlogpostController(router *mux.Router, bs blogpostServicePkg.BlogpostService) *BlogpostController{
+func ProvideBlogpostController(router *mux.Router, bs blogpostServicePkg.BlogpostService) *BlogpostController {
 	return &BlogpostController{router: router, bs: bs}
 }
