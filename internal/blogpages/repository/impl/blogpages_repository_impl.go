@@ -31,8 +31,8 @@ var (
 	SELECT blogID FROM blogpages;
 	`
 	CHECK_USER_EXISTS = `
-	SELECT userID FROM user
-	WHERE userID = ?;
+	SELECT owner FROM blogpages
+	WHERE owner = ?;
 	`
 	NEW_BLOGPAGES = `
 	INSERT INTO yearbook_db.blogpages(header_img,description,owner) VALUES(?,?,?);`
