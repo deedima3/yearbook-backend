@@ -16,26 +16,26 @@ type blogpagesRepositoryImpl struct {
 var (
 	GET_ALL_PAGES = `
 	SELECT bp.blogID, bp.owner, bp.header_img, u.nickname, bp.description FROM blogpages bp
-	JOIN user u ON bp.owner = u.userID
+	JOIN user u ON bp.owner = u.userID;
 	`
 	GET_USER_PAGE = `
 	SELECT bp.blogID, bp.owner, bp.header_img, u.nickname, bp.description FROM blogpages bp
 	JOIN user u ON bp.owner = u.userID
-	WHERE u.userID = ?
+	WHERE u.userID = ?;
 	`
 	CHECK_USER_PAGE_EXISTS = `
 	SELECT blogID FROM blogpages
-	WHERE blogID = ?
+	WHERE blogID = ?;
 	`
 	CHECK_PAGES_EXISTS = `
-	SELECT blogID FROM blogpages
+	SELECT blogID FROM blogpages;
 	`
 	CHECK_USER_EXISTS = `
 	SELECT userID FROM user
-	WHERE userID = ?
+	WHERE userID = ?;
 	`
 	NEW_BLOGPAGES = `
-	INSERT INTO yearbook_db.blogpages(header_img,description,owner) VALUES(?,?,?)`
+	INSERT INTO yearbook_db.blogpages(header_img,description,owner) VALUES(?,?,?);`
 )
 
 func ProvideBlogpagesRepository(DB *sql.DB) *blogpagesRepositoryImpl {
