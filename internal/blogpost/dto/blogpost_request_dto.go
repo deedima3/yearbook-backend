@@ -9,15 +9,18 @@ import (
 )
 
 type BlogPostRequestBody struct {
-	Content string `json:"content"`
-	Pages	uint64 `json:"pages"`
+	Content  string `json:"content"`
+	Pages    uint64 `json:"pages"`
+	Upvote   uint64 `json:"upvote"`
+	Downvote uint64 `json:"downvote"`
+	Title    string `json:"title"`
 }
 
-func(b *BlogPostRequestBody) FromJSON(r io.Reader)error{
+func (b *BlogPostRequestBody) FromJSON(r io.Reader) error {
 	return json.NewDecoder(r).Decode(b)
 }
 
-func(b BlogPostRequestBody) CreateBlogpostEntity() entity.Blogpost{
+func (b BlogPostRequestBody) CreateBlogpostEntity() entity.Blogpost {
 	var blogpostEntity entity.Blogpost
 	automapper.MapLoose(b, &blogpostEntity)
 	return blogpostEntity
