@@ -14,4 +14,5 @@ const (
 	API_NEW_BLOGPAGE   = "/pages"
 	API_VIEW_VOTES     = "/twits/{postID}"
 	API_VIEW_TOP_TWITS = "/twits"
+	API_UPDATE_VOTES   = "/vote"
 )

@@ -11,4 +11,5 @@ type BlogpostService interface {
 	CreatePost(ctx context.Context, br dto.BlogPostRequestBody) (uint64, error)
 	ViewUpvoteDownvote(ctx context.Context, postID uint64) (dto.UpvoteDownvoteResponses, error)
 	ViewTopTwits(ctx context.Context) (dto.TopTwitsResponses, error)
+  UpdateVotes(ctx context.Context, bv dto.BlogPostVotesRequestBody) (string, error)
 }

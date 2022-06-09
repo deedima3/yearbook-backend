@@ -3,6 +3,7 @@ package impl
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"log"
 
 	"github.com/deedima3/yearbook-backend/internal/blogpost/entity"
@@ -42,6 +43,14 @@ const (
 	`
 	CHECK_TWITS_EXISTS = `
 	SELECT postID FROM blogpost;
+	`
+	UPDATE_UPVOTE = `
+	UPDATE blogpost SET upvote = upvote + 1
+	WHERE postID = %d
+	`
+	UPDATE_DOWNVOTE = `
+	UPDATE blogpost SET downvote = downvote + 1
+	WHERE postID = ?;
 	`
 )
 
@@ -95,6 +104,37 @@ func (b blogpostRepositoryImpl) ViewTopTwits(ctx context.Context) (entity.BlogPo
 		blogposts = append(blogposts, &blogpost)
 	}
 	return blogposts, nil
+}
+
+func (b blogpostRepositoryImpl) UpdateUpvote(ctx context.Context, postID uint64) error {
+	query := fmt.Sprintf(UPDATE_UPVOTE, postID)
+	stmt, err := b.DB.PrepareContext(ctx, query)
+	if err != nil {
+		log.Printf("ERROR UpdateUpvote1 -> error: %v\n", err)
+		return err
+	}
+	_, err = stmt.ExecContext(ctx)
+	if err != nil {
+		log.Printf("ERROR UpdateUpvote2 -> error: %v\n", err)
+		return err
+	}
+	return nil
+}
+
+func (b blogpostRepositoryImpl) UpdateDownvote(ctx context.Context, postID uint64) error {
+	query := UPDATE_DOWNVOTE
+	stmt, err := b.DB.PrepareContext(ctx, query)
+	if err != nil {
+		log.Printf("ERROR UpdateDownvote -> error: %v\n", err)
+		return err
+	}
+	_, err = stmt.ExecContext(ctx, postID)
+	if err != nil {
+		log.Printf("ERROR UpdateDownvote -> error: %v\n", err)
+		return err
+	}
+	return nil
+
 }
 
 func (b blogpostRepositoryImpl) ViewUpvoteDownvote(ctx context.Context, id uint64) (entity.BlogPosts, error) {

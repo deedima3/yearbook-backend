@@ -16,6 +16,21 @@ type BlogPostRequestBody struct {
 	Title    string `json:"title"`
 }
 
+type BlogPostVotesRequestBody struct {
+	PostID uint64 `json:"postID"`
+	Action string `json:"action"`
+}
+
+func (bv *BlogPostVotesRequestBody) FromJSON(r io.Reader) error {
+	return json.NewDecoder(r).Decode(bv)
+}
+
+func (bv BlogPostVotesRequestBody) CreateBlogpostVotesEntity() entity.Blogpost {
+	var blogpostEntity entity.Blogpost
+	automapper.MapLoose(bv, &blogpostEntity)
+	return blogpostEntity
+}
+
 func (b *BlogPostRequestBody) FromJSON(r io.Reader) error {
 	return json.NewDecoder(r).Decode(b)
 }
