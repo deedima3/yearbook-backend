@@ -3,9 +3,10 @@ package impl
 import (
 	"context"
 	"database/sql"
+	"log"
+
 	"github.com/deedima3/yearbook-backend/internal/blogpages/entity"
 	"github.com/deedima3/yearbook-backend/internal/user/helper"
-	"log"
 )
 
 type blogpagesRepositoryImpl struct {
@@ -13,6 +14,10 @@ type blogpagesRepositoryImpl struct {
 }
 
 var (
+	GET_ALL_PAGES = `
+	SELECT bp.blogID, bp.owner, bp.header_img, u.nickname, bp.description FROM blogpages bp
+	JOIN user u ON bp.owner = u.userID
+	`
 	GET_USER_PAGE = `
 	SELECT bp.blogID, bp.owner, bp.header_img, u.nickname, bp.description FROM blogpages bp
 	JOIN user u ON bp.owner = u.userID
@@ -21,6 +26,9 @@ var (
 	CHECK_USER_PAGE_EXISTS = `
 	SELECT blogID FROM blogpages
 	WHERE blogID = ?
+	`
+	CHECK_PAGES_EXISTS = `
+	SELECT blogID FROM blogpages
 	`
 	CHECK_USER_EXISTS = `
 	SELECT userID FROM user
@@ -70,6 +78,59 @@ func (br blogpagesRepositoryImpl) CheckUserPage(ctx context.Context, id uint64) 
 		return true, nil
 	}
 	return false, nil
+}
+
+func (br blogpagesRepositoryImpl) CheckPages(ctx context.Context) (bool, error) {
+	query := CHECK_PAGES_EXISTS
+	stmt, err := br.DB.PrepareContext(ctx, query)
+	if err != nil {
+		log.Printf("ERROR CheckPages -> error %v\n", err)
+		return false, err
+	}
+	rows, err := stmt.Query()
+	if err != nil {
+		log.Printf("ERROR CheckPages -> error %v\n", err)
+		return false, err
+	}
+	if rows.Next() {
+		return true, nil
+	}
+	return false, nil
+}
+
+func (br blogpagesRepositoryImpl) GetAllPages(ctx context.Context) (entity.BlogPagesPeopleJoined, error) {
+	query := GET_ALL_PAGES
+	stmt, err := br.DB.PrepareContext(ctx, query)
+	if err != nil {
+		log.Printf("ERROR GetAllPages -> error: %v\n", err)
+		return entity.BlogPagesPeopleJoined{}, err
+	}
+	rows, err := stmt.Query()
+	if err != nil {
+		log.Printf("ERROR GetAllPages -> error: %v\n", err)
+		return entity.BlogPagesPeopleJoined{}, err
+	}
+
+	blogPages := entity.BlogPagesPeopleJoined{}
+
+	for rows.Next() {
+		var blogPage entity.BlogPageUserJoined
+
+		err := rows.Scan(
+			&blogPage.BlogPage.PageID,
+			&blogPage.BlogPage.Owner,
+			&blogPage.BlogPage.HeaderImage,
+			&blogPage.User.Nickname,
+			&blogPage.BlogPage.Description,
+		)
+
+		if err != nil {
+			log.Printf("ERROR GetAllPages -> error: %v\n", err)
+			return entity.BlogPagesPeopleJoined{}, err
+		}
+		blogPages = append(blogPages, &blogPage)
+	}
+	return blogPages, nil
 }
 
 func (br blogpagesRepositoryImpl) ViewUserPages(ctx context.Context, userID uint64) (entity.BlogPagesPeopleJoined, error) {

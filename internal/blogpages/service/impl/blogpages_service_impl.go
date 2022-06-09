@@ -2,9 +2,10 @@ package impl
 
 import (
 	"context"
+	"log"
+
 	"github.com/deedima3/yearbook-backend/internal/blogpages/entity"
 	"github.com/deedima3/yearbook-backend/internal/user/helper"
-	"log"
 
 	"github.com/SIC-Unud/sicgolib"
 	"github.com/deedima3/yearbook-backend/internal/blogpages/dto"
@@ -17,6 +18,24 @@ type blogpageServiceImpl struct {
 
 func ProvideRegistrationRepository(rr repositoryApiPkg.BlogPageRepository) *blogpageServiceImpl {
 	return &blogpageServiceImpl{rr: rr}
+}
+
+func (bp blogpageServiceImpl) GetAllPages(ctx context.Context) (dto.BlogPagesResponse, error) {
+	check, err := bp.rr.CheckPages(ctx)
+	if err != nil {
+		log.Printf("ERROR GetAllPages -> error: %v\n", err)
+		return nil, err
+	}
+	if !check {
+		panic(sicgolib.NewErrorResponse(404, sicgolib.RESPONSE_ERROR_DATA_NOT_EXISTS_MESSAGE,
+			sicgolib.NewErrorResponseValue("pages", "does not exist")))
+	}
+	allPages, err := bp.rr.GetAllPages(ctx)
+	if err != nil {
+		log.Printf("ERROR GetAllPages -> error: %v\n", err)
+		return nil, err
+	}
+	return *dto.CreateBlogPagesResponse(allPages), err
 }
 
 func (bp blogpageServiceImpl) ViewUserPages(ctx context.Context, id uint64) (dto.BlogPagesResponse, error) {
