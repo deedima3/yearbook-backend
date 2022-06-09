@@ -73,7 +73,8 @@ func (bc *BlogpostController) viewTopTwits(rw http.ResponseWriter, r *http.Reque
 		))
 	}
 	sicgolib.NewBaseResponse(200, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, topTwits).ToJSON(rw)
-  
+}
+
 func (bc *BlogpostController) updateVotes(rw http.ResponseWriter, r *http.Request) {
 	voteRequest := new(dto.BlogPostVotesRequestBody)
 
