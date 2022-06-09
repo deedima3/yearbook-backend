@@ -21,7 +21,7 @@ var (
 	GET_USER_PAGE = `
 	SELECT bp.blogID, bp.owner, bp.header_img, u.nickname, bp.description FROM blogpages bp
 	JOIN user u ON bp.owner = u.userID
-	WHERE bp.blogID = ?
+	WHERE u.userID = ?
 	`
 	CHECK_USER_PAGE_EXISTS = `
 	SELECT blogID FROM blogpages
