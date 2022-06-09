@@ -35,6 +35,15 @@ const (
 	SELECT upvote, downvote FROM blogpost
 	WHERE postID = ?;
 	`
+	SELECT_TOP_10_TWITS = `
+	SELECT postID, title, content, upvote, downvote
+	FROM yearbook_db.blogpost
+	ORDER BY upvote DESC
+	LIMIT 10;
+	`
+	CHECK_TWITS_EXISTS = `
+	SELECT postID FROM blogpost;
+	`
 	UPDATE_UPVOTE = `
 	UPDATE blogpost SET upvote = upvote + 1
 	WHERE postID = %d
@@ -44,6 +53,58 @@ const (
 	WHERE postID = ?;
 	`
 )
+
+func (b blogpostRepositoryImpl) CheckTwits(ctx context.Context) (bool, error) {
+	query := CHECK_TWITS_EXISTS
+	stmt, err := b.DB.PrepareContext(ctx, query)
+	if err != nil {
+		log.Printf("ERROR CheckPages -> error %v\n", err)
+		return false, err
+	}
+	rows, err := stmt.Query()
+	if err != nil {
+		log.Printf("ERROR CheckPages -> error %v\n", err)
+		return false, err
+	}
+	if rows.Next() {
+		return true, nil
+	}
+	return false, nil
+}
+
+func (b blogpostRepositoryImpl) ViewTopTwits(ctx context.Context) (entity.BlogPosts, error) {
+	query := SELECT_TOP_10_TWITS
+	stmt, err := b.DB.PrepareContext(ctx, query)
+	if err != nil {
+		log.Printf("ERROR ViewTopTwits -> error: %v\n", err)
+		return entity.BlogPosts{}, err
+	}
+	rows, err := stmt.Query()
+	if err != nil {
+		log.Printf("ERROR ViewTopTwits -> error: %v\n", err)
+		return entity.BlogPosts{}, err
+	}
+
+	blogposts := entity.BlogPosts{}
+
+	for rows.Next() {
+		var blogpost entity.Blogpost
+
+		err := rows.Scan(
+			&blogpost.PostId,
+			&blogpost.Title,
+			&blogpost.Content,
+			&blogpost.Upvote,
+			&blogpost.Downvote,
+		)
+		if err != nil {
+			log.Printf("ERROR ViewTopTwits -> error: %v\n", err)
+			return entity.BlogPosts{}, err
+		}
+		blogposts = append(blogposts, &blogpost)
+	}
+	return blogposts, nil
+}
 
 func (b blogpostRepositoryImpl) UpdateUpvote(ctx context.Context, postID uint64) error {
 	query := fmt.Sprintf(UPDATE_UPVOTE, postID)
@@ -73,6 +134,7 @@ func (b blogpostRepositoryImpl) UpdateDownvote(ctx context.Context, postID uint6
 		return err
 	}
 	return nil
+
 }
 
 func (b blogpostRepositoryImpl) ViewUpvoteDownvote(ctx context.Context, id uint64) (entity.BlogPosts, error) {

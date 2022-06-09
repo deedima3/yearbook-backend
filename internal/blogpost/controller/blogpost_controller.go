@@ -63,6 +63,17 @@ func (bc *BlogpostController) createPost(rw http.ResponseWriter, r *http.Request
 	sicgolib.NewBaseResponse(201, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, blogID).ToJSON(rw)
 }
 
+func (bc *BlogpostController) viewTopTwits(rw http.ResponseWriter, r *http.Request) {
+	topTwits, err := bc.bs.ViewTopTwits(r.Context())
+	if err != nil {
+		panic(sicgolib.NewErrorResponse(
+			http.StatusBadRequest,
+			sicgolib.RESPONSE_ERROR_BUSINESS_LOGIC_MESSAGE,
+			sicgolib.NewErrorResponseValue("internal", "server error"),
+		))
+	}
+	sicgolib.NewBaseResponse(200, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, topTwits).ToJSON(rw)
+  
 func (bc *BlogpostController) updateVotes(rw http.ResponseWriter, r *http.Request) {
 	voteRequest := new(dto.BlogPostVotesRequestBody)
 
@@ -73,7 +84,6 @@ func (bc *BlogpostController) updateVotes(rw http.ResponseWriter, r *http.Reques
 			sicgolib.NewErrorResponseValue("request body", "invalid json format"),
 		))
 	}
-
 	msg, _ := bc.bs.UpdateVotes(r.Context(), *voteRequest)
 	sicgolib.NewBaseResponse(201, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, msg).ToJSON(rw)
 }
@@ -83,6 +93,7 @@ func (bc *BlogpostController) InitializeController() {
 	bc.router.HandleFunc(global.API_INSERT_POST, bc.createPost).Methods(http.MethodPost, http.MethodOptions)
 	bc.router.HandleFunc(global.API_DELETE_POST, bc.deletePost).Methods(http.MethodDelete, http.MethodOptions)
 	bc.router.HandleFunc(global.API_VIEW_VOTES, bc.viewUpvoteDownvote).Methods(http.MethodGet, http.MethodOptions)
+	bc.router.HandleFunc(global.API_VIEW_TOP_TWITS, bc.viewTopTwits).Methods(http.MethodGet, http.MethodOptions)
 	bc.router.HandleFunc(global.API_UPDATE_VOTES, bc.updateVotes).Methods(http.MethodPatch, http.MethodOptions)
 }
 

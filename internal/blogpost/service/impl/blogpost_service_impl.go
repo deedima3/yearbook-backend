@@ -36,6 +36,24 @@ func (bs blogpostServiceImpl) ViewUpvoteDownvote(ctx context.Context, postID uin
 	return *dto.CreateUpvoteDownvoteResponses(vote), err
 }
 
+func (bs blogpostServiceImpl) ViewTopTwits(ctx context.Context) (dto.TopTwitsResponses, error) {
+	check, err := bs.rr.CheckTwits(ctx)
+	if err != nil {
+		log.Printf("ERROR ViewTopTwits -> error: %v\n", err)
+		return nil, err
+	}
+	if !check || err != nil {
+		panic(sicgolib.NewErrorResponse(404, sicgolib.RESPONSE_ERROR_DATA_NOT_EXISTS_MESSAGE,
+			sicgolib.NewErrorResponseValue("twits", "does not exist")))
+	}
+	topTwits, err := bs.rr.ViewTopTwits(ctx)
+	if err != nil {
+		log.Printf("ERROR ViewTopTwits -> error: %v\n", err)
+		return nil, err
+	}
+	return *dto.CreateTopTwitsResponses(topTwits), nil
+}
+
 func (bs blogpostServiceImpl) DeletePostByID(ctx context.Context, postID uint64) error {
 	check, err := bs.rr.CheckPostExists(ctx, postID)
 	if err != nil {
