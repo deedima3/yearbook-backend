@@ -67,6 +67,11 @@ var (
 	SELECT COUNT(u.userID) FROM blogpages AS bp
 	JOIN user as u ON bp.owner = u.userID
 	WHERE u.nim LIKE '%s%%';
+  `
+	UPDATE_BLOGPAGES = `
+	UPDATE yearbook_db.blogpages
+	SET header_img=?,description=?
+	WHERE blogID=?
 	`
 )
 
@@ -413,4 +418,15 @@ func (br blogpagesRepositoryImpl) CreateUserPage(ctx context.Context, page entit
 	_, err = res.LastInsertId()
 	helper.HelperIfError(err)
 	return false, nil
+}
+
+func (br blogpagesRepositoryImpl) UpdateUserPage(ctx context.Context, page entity.BlogPage, pageID int) error {
+	query := UPDATE_BLOGPAGES
+	stmt, err := br.DB.PrepareContext(ctx, query)
+	helper.HelperIfError(err)
+	res, err := stmt.ExecContext(ctx, page.HeaderImage, page.Description, pageID)
+	helper.HelperIfError(err)
+	_, err = res.RowsAffected()
+	helper.HelperIfError(err)
+	return nil
 }

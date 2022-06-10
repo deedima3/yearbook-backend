@@ -133,3 +133,13 @@ func (bp blogpageServiceImpl) NewUserPages(ctx context.Context, blogpage dto.Req
 	helper.HelperIfError(err)
 	return nil
 }
+
+func (bp blogpageServiceImpl) UpdateUserPages(ctx context.Context, body dto.UserUpdatePagesBody) error {
+	pagesUpdate := entity.BlogPage{
+		HeaderImage: body.HeaderImgPath,
+		Description: body.Description,
+	}
+	err := bp.rr.UpdateUserPage(ctx, pagesUpdate, body.BlogID)
+	helper.HelperIfError(err)
+	return nil
+}

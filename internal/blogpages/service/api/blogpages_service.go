@@ -13,4 +13,5 @@ type BlogpagesService interface {
 	SearchUserPages(ctx context.Context, nickname string, nim string) (dto.BlogPagesSearchResponses, error)
 	SearchUserNickname(ctx context.Context, nickname string) (dto.BlogPagesSearchResponses, error)
 	SearchUserNim(ctx context.Context, nim string) (dto.BlogPagesSearchResponses, error)
+	UpdateUserPages(ctx context.Context, body dto.UserUpdatePagesBody) error
 }

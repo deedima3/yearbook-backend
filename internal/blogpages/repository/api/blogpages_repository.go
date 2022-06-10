@@ -19,4 +19,5 @@ type BlogPageRepository interface {
 	GetSearchNickname(ctx context.Context, nickname string) (uint64, error)
 	GetSearchNim(ctx context.Context, nim string) (uint64, error)
 	SearchUserNim(ctx context.Context, nim string) (entity.BlogPagesPeopleJoined, error)
+	UpdateUserPage(ctx context.Context, page entity.BlogPage, pageID int) error
 }
