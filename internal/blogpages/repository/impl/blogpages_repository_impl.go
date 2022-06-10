@@ -36,6 +36,12 @@ var (
 	`
 	NEW_BLOGPAGES = `
 	INSERT INTO yearbook_db.blogpages(header_img,description,owner) VALUES(?,?,?);`
+
+	UPDATE_BLOGPAGES = `
+	UPDATE yearbook_db.blogpages
+	SET header_img=?,description=?
+	WHERE blogID=?
+	`
 )
 
 func ProvideBlogpagesRepository(DB *sql.DB) *blogpagesRepositoryImpl {
@@ -177,4 +183,15 @@ func (br blogpagesRepositoryImpl) CreateUserPage(ctx context.Context, page entit
 	_, err = res.LastInsertId()
 	helper.HelperIfError(err)
 	return false, nil
+}
+
+func (br blogpagesRepositoryImpl) UpdateUserPage(ctx context.Context, page entity.BlogPage, pageID int) error {
+	query := UPDATE_BLOGPAGES
+	stmt, err := br.DB.PrepareContext(ctx, query)
+	helper.HelperIfError(err)
+	res, err := stmt.ExecContext(ctx, page.HeaderImage, page.Description, pageID)
+	helper.HelperIfError(err)
+	_, err = res.RowsAffected()
+	helper.HelperIfError(err)
+	return nil
 }
