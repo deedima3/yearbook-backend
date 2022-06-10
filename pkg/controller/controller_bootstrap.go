@@ -4,6 +4,9 @@ import (
 	"database/sql"
 
 	"github.com/SIC-Unud/sicgolib"
+	birthdayControllerPkg "github.com/deedima3/yearbook-backend/internal/birthday/controller"
+	birthdayRepositoryPkg "github.com/deedima3/yearbook-backend/internal/birthday/repository/impl"
+	birthdayServicePkg "github.com/deedima3/yearbook-backend/internal/birthday/service/impl"
 	blogpagesControllerPkg "github.com/deedima3/yearbook-backend/internal/blogpages/controller"
 	blogpagesRepositoryPkg "github.com/deedima3/yearbook-backend/internal/blogpages/repository/impl"
 	blogpagesServicePkg "github.com/deedima3/yearbook-backend/internal/blogpages/service/impl"
@@ -43,4 +46,11 @@ func SetupController(router *mux.Router, db *sql.DB) {
 	pingService := ping.ProvidePingService()
 	pingController := ping.ProvidePingController(webRouter, pingService)
 	pingController.InitializeController()
+
+	birthdayRouter := router.PathPrefix(API_ROOT_WEB_PATH).Subrouter()
+	birthdayRepository := birthdayRepositoryPkg.ProvideBirthdayRepository(db)
+	birthdayService := birthdayServicePkg.ProvideRegistrationRepository(birthdayRepository)
+	birthdayController := birthdayControllerPkg.ProvideBirthdayController(birthdayRouter, birthdayService)
+	birthdayController.InitializeController()
+
 }
