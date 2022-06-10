@@ -13,5 +13,11 @@ type BlogPageRepository interface {
 	CheckPages(ctx context.Context) (bool, error)
 	CheckUserPage(ctx context.Context, id uint64) (bool, error)
 	CreateUserPage(ctx context.Context, page entity.BlogPage) (bool, error)
+	SearchUserPages(ctx context.Context, nickname string, nim string) (entity.BlogPagesPeopleJoined, error)
+	GetSearchResult(ctx context.Context, nickname string, nim string) (uint64, error)
+	SearchUserNickname(ctx context.Context, nickname string) (entity.BlogPagesPeopleJoined, error)
+	GetSearchNickname(ctx context.Context, nickname string) (uint64, error)
+	GetSearchNim(ctx context.Context, nim string) (uint64, error)
+	SearchUserNim(ctx context.Context, nim string) (entity.BlogPagesPeopleJoined, error)
 	UpdateUserPage(ctx context.Context, page entity.BlogPage, pageID int) error
 }

@@ -18,6 +18,40 @@ type BlogpagesController struct {
 	bps    blogpagesServicePkg.BlogpagesService
 }
 
+func (bpc *BlogpagesController) searchUserPages(rw http.ResponseWriter, r *http.Request) {
+	queryVar := r.URL.Query()
+	nickname, nim := queryVar.Get("nickname"), queryVar.Get("nim")
+
+	if nim == "" {
+		searchNickname, err := bpc.bps.SearchUserNickname(r.Context(), nickname)
+		if err != nil {
+			panic(sicgolib.NewErrorResponse(
+				400,
+				sicgolib.RESPONSE_ERROR_RUNTIME_MESSAGE,
+				sicgolib.NewErrorResponseValue("request error", err.Error())))
+		}
+		sicgolib.NewBaseResponse(200, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, searchNickname).SendResponse(&rw)
+	} else if nickname == "" {
+		searchNim, err := bpc.bps.SearchUserNim(r.Context(), nim)
+		if err != nil {
+			panic(sicgolib.NewErrorResponse(
+				400,
+				sicgolib.RESPONSE_ERROR_RUNTIME_MESSAGE,
+				sicgolib.NewErrorResponseValue("request error", err.Error())))
+		}
+		sicgolib.NewBaseResponse(200, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, searchNim).SendResponse(&rw)
+	} else {
+		searchRes, err := bpc.bps.SearchUserPages(r.Context(), nickname, nim)
+		if err != nil {
+			panic(sicgolib.NewErrorResponse(
+				400,
+				sicgolib.RESPONSE_ERROR_RUNTIME_MESSAGE,
+				sicgolib.NewErrorResponseValue("request error", err.Error())))
+		}
+		sicgolib.NewBaseResponse(200, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, searchRes).SendResponse(&rw)
+	}
+}
+
 func (bpc *BlogpagesController) viewUserPages(rw http.ResponseWriter, r *http.Request) {
 	queryVar := mux.Vars(r)
 	userID := queryVar["userID"]
@@ -66,6 +100,7 @@ func (bpc *BlogpagesController) InitializeController() {
 	bpc.router.HandleFunc(global.API_GET_USER_PAGES, bpc.viewUserPages).Methods(http.MethodGet, http.MethodOptions)
 	bpc.router.HandleFunc(global.API_GET_ALL_PAGES, bpc.getAllPages).Methods(http.MethodGet, http.MethodOptions)
 	bpc.router.HandleFunc(global.API_NEW_BLOGPAGE, bpc.NewBlogpage).Methods(http.MethodPost, http.MethodOptions)
+	bpc.router.HandleFunc(global.API_SEARCH_USER_PAGES, bpc.searchUserPages).Methods(http.MethodGet, http.MethodOptions)
 	bpc.router.HandleFunc(global.API_UPDATE_BLOGPAGE, bpc.UpdateBlogPages).Methods(http.MethodPatch, http.MethodOptions)
 }
 

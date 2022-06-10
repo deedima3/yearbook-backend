@@ -20,6 +20,60 @@ func ProvideRegistrationRepository(rr repositoryApiPkg.BlogPageRepository) *blog
 	return &blogpageServiceImpl{rr: rr}
 }
 
+func (bp blogpageServiceImpl) SearchUserNim(ctx context.Context, nim string) (dto.BlogPagesSearchResponses, error) {
+	searchCount, err := bp.rr.GetSearchNim(ctx, nim)
+	if err != nil {
+		log.Printf("ERROR SearchUserNim -> error: %v\n", err)
+		return nil, err
+	}
+	if searchCount == 0 {
+		panic(sicgolib.NewErrorResponse(404, sicgolib.RESPONSE_ERROR_DATA_NOT_EXISTS_MESSAGE,
+			sicgolib.NewErrorResponseValue("search", "not found")))
+	}
+	searchRes, err := bp.rr.SearchUserNim(ctx, nim)
+	if err != nil {
+		log.Printf("ERROR SearchUserNim -> error: %v\n", err)
+		return nil, err
+	}
+	return *dto.CreateBlogPagesSearchResponses(searchRes), nil
+}
+
+func (bp blogpageServiceImpl) SearchUserNickname(ctx context.Context, nickname string) (dto.BlogPagesSearchResponses, error) {
+	searchCount, err := bp.rr.GetSearchNickname(ctx, nickname)
+	if err != nil {
+		log.Printf("ERROR SearchUserNickname -> error: %v\n", err)
+		return nil, err
+	}
+	if searchCount == 0 {
+		panic(sicgolib.NewErrorResponse(404, sicgolib.RESPONSE_ERROR_DATA_NOT_EXISTS_MESSAGE,
+			sicgolib.NewErrorResponseValue("search", "not found")))
+	}
+	searchRes, err := bp.rr.SearchUserNickname(ctx, nickname)
+	if err != nil {
+		log.Printf("ERROR SearchUserNickname -> error: %v\n", err)
+		return nil, err
+	}
+	return *dto.CreateBlogPagesSearchResponses(searchRes), nil
+}
+
+func (bp blogpageServiceImpl) SearchUserPages(ctx context.Context, nickname string, nim string) (dto.BlogPagesSearchResponses, error) {
+	searchCount, err := bp.rr.GetSearchResult(ctx, nickname, nim)
+	if err != nil {
+		log.Printf("ERROR SearchUserPages -> error: %v\n", err)
+		return nil, err
+	}
+	if searchCount == 0 {
+		panic(sicgolib.NewErrorResponse(404, sicgolib.RESPONSE_ERROR_DATA_NOT_EXISTS_MESSAGE,
+			sicgolib.NewErrorResponseValue("search", "not found")))
+	}
+	searchRes, err := bp.rr.SearchUserPages(ctx, nickname, nim)
+	if err != nil {
+		log.Printf("ERROR SearchUserPages -> error: %v\n", err)
+		return nil, err
+	}
+	return *dto.CreateBlogPagesSearchResponses(searchRes), nil
+}
+
 func (bp blogpageServiceImpl) GetAllPages(ctx context.Context) (dto.BlogPagesResponse, error) {
 	check, err := bp.rr.CheckPages(ctx)
 	if err != nil {
