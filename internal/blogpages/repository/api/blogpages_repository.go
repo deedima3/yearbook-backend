@@ -13,4 +13,5 @@ type BlogPageRepository interface {
 	CheckPages(ctx context.Context) (bool, error)
 	CheckUserPage(ctx context.Context, id uint64) (bool, error)
 	CreateUserPage(ctx context.Context, page entity.BlogPage) (bool, error)
+	UpdateUserPage(ctx context.Context, page entity.BlogPage, pageID int) error
 }

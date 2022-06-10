@@ -53,10 +53,20 @@ func (u BlogpagesController) NewBlogpage(rw http.ResponseWriter, r *http.Request
 	sicgolib.NewBaseResponse(200, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, "success").SendResponse(&rw)
 }
 
+func (u BlogpagesController) UpdateBlogPages(rw http.ResponseWriter, r *http.Request) {
+	bodyUpdateBlogPages := new(dto.UserUpdatePagesBody)
+	err := bodyUpdateBlogPages.FromJSON(r.Body)
+	helper.BadRequest(err, "Body Format", "Invalid Json Format")
+	err = u.bps.UpdateUserPages(r.Context(), *bodyUpdateBlogPages)
+	helper.HelperIfError(err)
+	sicgolib.NewBaseResponse(200, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, "success").SendResponse(&rw)
+}
+
 func (bpc *BlogpagesController) InitializeController() {
 	bpc.router.HandleFunc(global.API_GET_USER_PAGES, bpc.viewUserPages).Methods(http.MethodGet, http.MethodOptions)
 	bpc.router.HandleFunc(global.API_GET_ALL_PAGES, bpc.getAllPages).Methods(http.MethodGet, http.MethodOptions)
 	bpc.router.HandleFunc(global.API_NEW_BLOGPAGE, bpc.NewBlogpage).Methods(http.MethodPost, http.MethodOptions)
+	bpc.router.HandleFunc(global.API_UPDATE_BLOGPAGE, bpc.UpdateBlogPages).Methods(http.MethodPatch, http.MethodOptions)
 }
 
 func ProvideBlogpagesController(router *mux.Router, bps blogpagesServicePkg.BlogpagesService) *BlogpagesController {
