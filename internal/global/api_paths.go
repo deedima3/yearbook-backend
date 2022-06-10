@@ -15,6 +15,8 @@ const (
 	API_GET_ALL_PAGES     = "/pages"
 	API_NEW_BLOGPAGE      = "/pages"
 	API_SEARCH_USER_PAGES = "/pages/search"
-  API_UPDATE_BLOGPAGE   = "/user/pages"
-  API_GET_USER_PAGES    = "/user/pages/{userID}"
+	API_UPDATE_BLOGPAGE   = "/user/pages"
+	API_GET_USER_PAGES    = "/user/pages/{userID}"
+	API_BIRTHDAY_WEEK     = "/birthday"
+	API_IS_BIRTHDAY       = "/birthday/{owner}"
 )
