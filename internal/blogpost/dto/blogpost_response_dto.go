@@ -15,9 +15,39 @@ type TopTwitsResponse struct {
 	Downvote uint64 `json:"downvote"`
 }
 
+type TwitsPerPagesResponse struct {
+	PostID   uint64 `json:"postID"`
+	Title    string `json:"title"`
+	Content  string `json:"content"`
+	Upvote   uint64 `json:"upvote"`
+	Downvote uint64 `json:"downvote"`
+	Pages    uint64 `json:"pages"`
+}
+
+type TwitsPerPagesResponses []TwitsPerPagesResponse
 type TopTwitsResponses []TopTwitsResponse
 type UpvoteDownvoteResponses []UpvoteDownvoteResponse
 
+func CreateTwitsPerPagesResponse(bp entity.Blogpost) TwitsPerPagesResponse {
+	return TwitsPerPagesResponse{
+		PostID:   bp.PostId,
+		Title:    bp.Title,
+		Content:  bp.Content,
+		Upvote:   bp.Upvote,
+		Downvote: bp.Downvote,
+		Pages:    bp.Pages,
+	}
+}
+
+func CreateTwitsPerPagesResponses(bp entity.BlogPosts) *TwitsPerPagesResponses {
+	var twitsPerPageResponse TwitsPerPagesResponses
+
+	for idx := range bp {
+		twitsPerPages := CreateTwitsPerPagesResponse(*bp[idx])
+		twitsPerPageResponse = append(twitsPerPageResponse, twitsPerPages)
+	}
+	return &twitsPerPageResponse
+}
 func CreateTopTwitsResponse(bp entity.Blogpost) TopTwitsResponse {
 	return TopTwitsResponse{
 		PostID:   bp.PostId,

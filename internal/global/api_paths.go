@@ -12,6 +12,7 @@ const (
 	API_VIEW_TOP_TWITS    = "/twits"
 	API_DELETE_POST       = "/twits/{postID}"
 	API_VIEW_VOTES        = "/twits/{postID}"
+	API_VIEW_TWITS_PAGES  = "/twits/pages/{pages}"
 	API_GET_ALL_PAGES     = "/pages"
 	API_NEW_BLOGPAGE      = "/pages"
 	API_SEARCH_USER_PAGES = "/pages/search"
