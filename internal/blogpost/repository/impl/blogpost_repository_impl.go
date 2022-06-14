@@ -38,6 +38,8 @@ const (
 	SELECT_TOP_10_TWITS = `
 	SELECT postID, title, content, upvote, downvote
 	FROM yearbook_db.blogpost
+    GROUP BY postID
+    HAVING SUM(upvote) > 10
 	ORDER BY upvote DESC
 	LIMIT 10;
 	`
