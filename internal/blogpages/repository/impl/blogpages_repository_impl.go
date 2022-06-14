@@ -41,7 +41,11 @@ var (
 	SEARCH_BLOGPAGE = `
 	SELECT u.userID, bp.header_img, bp.description, u.nickname, u.nim, u.image FROM blogpages bp
 	JOIN user u ON bp.owner = u.userID
-	WHERE u.nickname LIKE '%s%%' OR u.nim LIKE '%s%%';
+	WHERE u.nickname LIKE '%s%%'
+	UNION
+	SELECT u.userID, bp.header_img, bp.description, u.nickname, u.nim, u.image FROM blogpages bp
+	JOIN user u ON bp.owner = u.userID
+	WHERE u.nim LIKE '%s%%';
 	`
 	COUNT_SEARCH_RES = `
 	SELECT COUNT(u.userID) FROM blogpages AS bp
