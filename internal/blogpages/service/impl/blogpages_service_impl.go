@@ -129,8 +129,16 @@ func (bp blogpageServiceImpl) NewUserPages(ctx context.Context, blogpage dto.Req
 		Description: blogpage.Description,
 		Owner:       uint64(blogpage.UserID),
 	}
-	_, err := bp.rr.CreateUserPage(ctx, page)
+	sum, err := bp.rr.CheckOwnerPages(ctx, page.Owner)
 	helper.HelperIfError(err)
+	if sum == 0 {
+		_, err = bp.rr.CreateUserPage(ctx, page)
+		helper.HelperIfError(err)
+	}
+	if sum > 0 {
+		panic(sicgolib.NewErrorResponse(503, "service unavailable",
+			sicgolib.NewErrorResponseValue("post pages service", "unavailable")))
+	}
 	return nil
 }
 
