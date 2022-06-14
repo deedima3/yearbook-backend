@@ -8,22 +8,22 @@
 Program that we make to complete the assignment given in database class. It's a simple yearbook that everyone can use, to make their own page. And anyone can share their stories about someone anonymously by commenting in other people pages
 
 ## Database ViewPoints
-- [x] DDL
-- [x] INSERT
-- [x] UPDATE
-- [x] DELETE
-- [x] SELECT w/ Logical Op & Like (usercart)
-- [x] SELECT w/ Order By (usercart)
-- [x] SELECT w/ Alias (auth, product, usercart)
-- [x] SELECT w/ Between (usercart)
-- [x] SELECT w/ JOIN (product, usercart)
-- [ ] SELECT w/ UNION (usercart)
+- [x] DDL (new table)
+- [x] INSERT (new post)
+- [x] UPDATE (upvote downvote)
+- [x] DELETE (delete post)
+- [x] SELECT w/ Logical Op & Like (birthday, search)
+- [x] SELECT w/ Order By (upvote, downvote)
+- [x] SELECT w/ Alias (auth, blogpost, blogpages)
+- [x] SELECT w/ Between (birthday)
+- [x] SELECT w/ JOIN (birthday, blogpost, blogpages)
+- [X] SELECT w/ UNION (search)
 - [ ] SELECT w/ IN (usercart)
 - [x] Aggregation Func (usercart)
-- [ ] Having (usercart)
+- [X] Having (usercart)
 - [ ] VIEW (not possible, too complex)
-- [ ] Stored Procedure and Cursor 
-- [ ] Trigger (product, usercart)
+- [ ] Stored Procedure and Cursor (not possible, too complex)
+- [X] Trigger (logging)
 ## Queries Reference
 - [Birthday Query](/docs/BirthdayQuery.md)
 - [Blog Page Query](/docs/BlogPagesQuery.md)
