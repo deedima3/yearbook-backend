@@ -20,4 +20,5 @@ type BlogPageRepository interface {
 	GetSearchNim(ctx context.Context, nim string) (uint64, error)
 	SearchUserNim(ctx context.Context, nim string) (entity.BlogPagesPeopleJoined, error)
 	UpdateUserPage(ctx context.Context, page entity.BlogPage, pageID int) error
+	CheckOwnerPages(ctx context.Context, owner uint64) (uint64, error)
 }

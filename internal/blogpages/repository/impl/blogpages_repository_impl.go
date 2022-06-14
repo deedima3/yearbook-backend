@@ -77,10 +77,37 @@ var (
 	SET header_img=?,description=?
 	WHERE blogID=?
 	`
+	CHECK_OWNER_PAGES = `
+	SELECT COUNT(blogID) FROM blogpages
+	WHERE owner = ?;
+	`
 )
 
 func ProvideBlogpagesRepository(DB *sql.DB) *blogpagesRepositoryImpl {
 	return &blogpagesRepositoryImpl{DB: DB}
+}
+
+func (br blogpagesRepositoryImpl) CheckOwnerPages(ctx context.Context, owner uint64) (uint64, error) {
+	query := CHECK_OWNER_PAGES
+	stmt, err := br.DB.PrepareContext(ctx, query)
+	if err != nil {
+		log.Printf("ERROR CheckOwnerPages -> error: %v\n", err)
+		return 0, err
+	}
+	rows, err := stmt.Query(owner)
+	if err != nil {
+		log.Printf("ERROR CheckOwnerPages -> error: %v\n", err)
+		return 0, err
+	}
+	var ownerCount uint64
+	for rows.Next() {
+		err := rows.Scan(&ownerCount)
+		if err != nil {
+			log.Printf("ERROR CheckOwnerPages -> error: %v\n", err)
+			return 0, err
+		}
+	}
+	return ownerCount, nil
 }
 
 func (br blogpagesRepositoryImpl) SearchUserNim(ctx context.Context, nim string) (entity.BlogPagesPeopleJoined, error) {
