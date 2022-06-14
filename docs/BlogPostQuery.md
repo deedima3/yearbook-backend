@@ -29,6 +29,8 @@ SELECT upvote, downvote FROM blogpost
 ```sql
 SELECT postID, title, content, upvote, downvote
 	FROM yearbook_db.blogpost
+    GROUP BY postID
+    HAVING SUM(upvote) > 10
 	ORDER BY upvote DESC
 	LIMIT 10;
 ```
