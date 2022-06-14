@@ -18,6 +18,24 @@ func ProvideRegistrationRepository(rr repositoryApiPkg.BlogpostRepository) *blog
 	return &blogpostServiceImpl{rr: rr}
 }
 
+func (bs blogpostServiceImpl) GetTwitsPerPages(ctx context.Context, pages uint64) (dto.TwitsPerPagesResponses, error) {
+	check, err := bs.rr.CheckTwitsPerPages(ctx, pages)
+	if err != nil {
+		log.Printf("ERROR GetTwitsPerPages -> error: %v\n", err)
+		return nil, err
+	}
+	if !check || err != nil {
+		panic(sicgolib.NewErrorResponse(404, sicgolib.RESPONSE_ERROR_DATA_NOT_EXISTS_MESSAGE,
+			sicgolib.NewErrorResponseValue("twitss", "does not exist")))
+	}
+	twits, err := bs.rr.GetTwitsPerPages(ctx, pages)
+	if err != nil {
+		log.Printf("ERROR GetTwitsPerPages -> error: %v\n", err)
+		return nil, err
+	}
+	return *dto.CreateTwitsPerPagesResponses(twits), nil
+}
+
 func (bs blogpostServiceImpl) ViewUpvoteDownvote(ctx context.Context, postID uint64) (dto.UpvoteDownvoteResponses, error) {
 	check, err := bs.rr.CheckPostExists(ctx, postID)
 	if err != nil {
@@ -33,7 +51,7 @@ func (bs blogpostServiceImpl) ViewUpvoteDownvote(ctx context.Context, postID uin
 		log.Printf("ERROR ViewUpvoteDownvote -> error: %v\n", err)
 		return nil, err
 	}
-	return *dto.CreateUpvoteDownvoteResponses(vote), err
+	return *dto.CreateUpvoteDownvoteResponses(vote), nil
 }
 
 func (bs blogpostServiceImpl) ViewTopTwits(ctx context.Context) (dto.TopTwitsResponses, error) {

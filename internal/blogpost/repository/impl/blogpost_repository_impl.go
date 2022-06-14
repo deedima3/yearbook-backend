@@ -54,7 +54,67 @@ const (
 	UPDATE blogpost SET downvote = downvote + 1
 	WHERE postID = ?;
 	`
+	GET_TWITS_PAGES = `
+	SELECT postID, title, content, upvote, downvote, pages FROM blogpost
+	WHERE pages = ?;
+	`
+	CHECK_TWITS_PAGES = `
+	SELECT postID FROM blogpost
+	WHERE pages = ?;
+	`
 )
+
+func (b blogpostRepositoryImpl) CheckTwitsPerPages(ctx context.Context, pages uint64) (bool, error) {
+	query := CHECK_TWITS_PAGES
+	stmt, err := b.DB.PrepareContext(ctx, query)
+	if err != nil {
+		log.Printf("ERROR CheckTwitsPerPages -> error: %v\n", err)
+		return false, nil
+	}
+	rows, err := stmt.Query(pages)
+	if err != nil {
+		log.Printf("ERROR CheckTwitsPerPages -> error: %v\n", err)
+		return false, nil
+	}
+	if rows.Next() {
+		return true, nil
+	}
+	return false, nil
+}
+
+func (b blogpostRepositoryImpl) GetTwitsPerPages(ctx context.Context, pages uint64) (entity.BlogPosts, error) {
+	query := GET_TWITS_PAGES
+	stmt, err := b.DB.PrepareContext(ctx, query)
+	if err != nil {
+		log.Printf("ERROR GetTwitsPerPages -> error: %v\n", err)
+		return nil, err
+	}
+	rows, err := stmt.Query(pages)
+	if err != nil {
+		log.Printf("ERROR GetTwitsPerPages -> error: %v\n", err)
+		return nil, err
+	}
+
+	blogposts := entity.BlogPosts{}
+
+	for rows.Next() {
+		var blogpost entity.Blogpost
+		err := rows.Scan(
+			&blogpost.PostId,
+			&blogpost.Title,
+			&blogpost.Content,
+			&blogpost.Upvote,
+			&blogpost.Downvote,
+			&blogpost.Pages,
+		)
+		if err != nil {
+			log.Printf("ERROR GetTwitsPerPages -> error: %v\n", err)
+			return nil, err
+		}
+		blogposts = append(blogposts, &blogpost)
+	}
+	return blogposts, nil
+}
 
 func (b blogpostRepositoryImpl) CheckTwits(ctx context.Context) (bool, error) {
 	query := CHECK_TWITS_EXISTS
