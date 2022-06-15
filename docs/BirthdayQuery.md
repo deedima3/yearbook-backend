@@ -1,14 +1,16 @@
 ## Birthday Query
 
 ### Check User Birthday
+
 ```sql
-SELECT * from user 
-	WHERE MONTH(user.birthDate) = MONTH(CAST(NOW() as DATE)) 
+SELECT * from user
+	WHERE MONTH(user.birthDate) = MONTH(CAST(NOW() as DATE))
 	AND DAY(birthDate) = DAY(CAST(NOW() as DATE))
 	AND user.userID = ?;
 ```
 
 ### Get This Week Birthday
+
 ```sql
 SELECT
 bp.blogID,
