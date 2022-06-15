@@ -3,13 +3,15 @@ package dto
 import (
 	"encoding/json"
 	"io"
+	"time"
 )
 
 type UserRegisterRequestBody struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
-	Nickname string `json:"nickname"`
-	Nim      string `json:"nim"`
+	Email     string    `json:"email"`
+	Password  string    `json:"password"`
+	Nickname  string    `json:"nickname"`
+	Nim       string    `json:"nim"`
+	BirthDate time.Time `json:"birthDate"`
 }
 
 type UserUpdateRequestBody struct {

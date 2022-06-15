@@ -20,10 +20,10 @@ func ProvideUserRepository(db *sql.DB) *userRepositoryImpl {
 }
 
 func (u userRepositoryImpl) InsertNewUser(ctx context.Context, user entity.User) error {
-	SQLQUERY := "INSERT INTO railway.user(email,password,nickname,nim) VALUES(?,?,?,?)"
+	SQLQUERY := "INSERT INTO railway.user(email,password,nickname,nim,birthDate) VALUES(?,?,?,?,?)"
 	stmt, err := u.DB.PrepareContext(ctx, SQLQUERY)
 	helper.HelperIfError(err)
-	res, err := stmt.ExecContext(ctx, strings.ToLower(user.Email), user.Password, user.Nickname, user.Nim)
+	res, err := stmt.ExecContext(ctx, strings.ToLower(user.Email), user.Password, user.Nickname, user.Nim, user.BirthDate)
 	helper.HelperIfError(err)
 	_, err = res.LastInsertId()
 	helper.HelperIfError(err)

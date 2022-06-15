@@ -2,6 +2,7 @@ package impl
 
 import (
 	"context"
+
 	"github.com/deedima3/yearbook-backend/internal/user/dto"
 	"github.com/deedima3/yearbook-backend/internal/user/entity"
 	"github.com/deedima3/yearbook-backend/internal/user/helper"
@@ -22,10 +23,11 @@ func (u userServiceImpl) CreateUser(ctx context.Context, body dto.UserRegisterRe
 	hashres, err := helper.HashPassword(body.Password)
 	helper.HelperIfError(err)
 	err = u.ur.InsertNewUser(ctx, entity.User{
-		Email:    body.Email,
-		Password: hashres,
-		Nickname: body.Nickname,
-		Nim:      body.Nim,
+		Email:     body.Email,
+		Password:  hashres,
+		Nickname:  body.Nickname,
+		Nim:       body.Nim,
+		BirthDate: body.BirthDate,
 	})
 	helper.HelperInternalServerErrorResponse(err)
 	return nil
