@@ -100,3 +100,10 @@ UPDATE railway.blogpages
 	SET header_img=?,description=?
 	WHERE blogID=?
 ```
+
+### Ckeck Owner Pages
+
+```sql
+SELECT COUNT(blogID) FROM blogpages
+	WHERE owner IN (?);
+```

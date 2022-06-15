@@ -29,3 +29,17 @@ SELECT userID, email, nickname FROM railway.user
 ```sql
 SELECT userID, email, nickname, password FROM railway.user WHERE email = ?
 ```
+
+### Trigger Backup User
+
+```sql
+DELIMITER $$
+DROP TRIGGER IF EXISTS log_user;
+CREATE TRIGGER log_user
+    AFTER DELETE ON user
+    BEGIN
+        INSERT INTO user_log(email, password, nickname)
+        VALUES(OLD.email, OLD.password, OLD.nickname);
+    END$$
+DELIMITER ;
+```
