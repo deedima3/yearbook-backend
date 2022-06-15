@@ -39,7 +39,11 @@ INSERT INTO yearbook_db.blogpages(header_img,description,owner) VALUES(?,?,?);
 ```sql
 SELECT u.userID, bp.header_img, bp.description, u.nickname, u.nim, u.image FROM blogpages bp
 	JOIN user u ON bp.owner = u.userID
-	WHERE u.nickname LIKE '%s%%' OR u.nim LIKE '%s%%';
+	WHERE u.nickname LIKE '%s%%'
+	UNION
+	SELECT u.userID, bp.header_img, bp.description, u.nickname, u.nim, u.image FROM blogpages bp
+	JOIN user u ON bp.owner = u.userID
+	WHERE u.nim LIKE '%s%%';
 ```
 
 ### Count Search Res
