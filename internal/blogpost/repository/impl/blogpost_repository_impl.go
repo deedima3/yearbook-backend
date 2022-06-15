@@ -19,7 +19,7 @@ func ProvideBlogpostRepository(DB *sql.DB) *blogpostRepositoryImpl {
 
 const (
 	INSERT_NEW_POST = `
-	INSERT INTO yearbook_db.blogpost
+	INSERT INTO railway.blogpost
 	(content, pages, upvote, downvote, title)
 	VALUES(?, ?, ?, ?, ?);
 	`

@@ -36,7 +36,7 @@ var (
 	WHERE owner = ?;
 	`
 	NEW_BLOGPAGES = `
-	INSERT INTO yearbook_db.blogpages(header_img,description,owner) VALUES(?,?,?);
+	INSERT INTO railway.blogpages(header_img,description,owner) VALUES(?,?,?);
 	`
 	SEARCH_BLOGPAGE = `
 	SELECT u.userID, bp.header_img, bp.description, u.nickname, u.nim, u.image FROM blogpages bp
@@ -73,7 +73,7 @@ var (
 	WHERE u.nim LIKE '%s%%';
   `
 	UPDATE_BLOGPAGES = `
-	UPDATE yearbook_db.blogpages
+	UPDATE railway.blogpages
 	SET header_img=?,description=?
 	WHERE blogID=?
 	`
