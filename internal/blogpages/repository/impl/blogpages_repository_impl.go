@@ -79,7 +79,7 @@ var (
 	`
 	CHECK_OWNER_PAGES = `
 	SELECT COUNT(blogID) FROM blogpages
-	WHERE owner = ?;
+	WHERE owner IN (?);
 	`
 )
 

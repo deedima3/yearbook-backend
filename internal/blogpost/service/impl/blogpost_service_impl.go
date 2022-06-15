@@ -26,7 +26,7 @@ func (bs blogpostServiceImpl) GetTwitsPerPages(ctx context.Context, pages uint64
 	}
 	if !check || err != nil {
 		panic(sicgolib.NewErrorResponse(404, sicgolib.RESPONSE_ERROR_DATA_NOT_EXISTS_MESSAGE,
-			sicgolib.NewErrorResponseValue("twitss", "does not exist")))
+			sicgolib.NewErrorResponseValue("twits", "does not exist")))
 	}
 	twits, err := bs.rr.GetTwitsPerPages(ctx, pages)
 	if err != nil {
