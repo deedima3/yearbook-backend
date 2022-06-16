@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 	"strings"
 
@@ -16,9 +17,11 @@ func initializeGlobalRouter(envVariables map[string]string) *mux.Router {
 	r := mux.NewRouter()
 
 	arrayWhiteListedUrls := strings.Split(envVariables["WHITELISTED_URLS"], ",")
-
+	for idx := range arrayWhiteListedUrls {
+		log.Printf(arrayWhiteListedUrls[idx])
+	}
 	whiteListedUrls := make(map[string]bool)
-	
+
 	for _, v := range arrayWhiteListedUrls {
 		whiteListedUrls[v] = true
 	}
