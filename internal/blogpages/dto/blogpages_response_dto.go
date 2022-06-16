@@ -1,13 +1,16 @@
 package dto
 
-import "github.com/deedima3/yearbook-backend/internal/blogpages/entity"
+import (
+	"github.com/deedima3/yearbook-backend/internal/blogpages/entity"
+)
 
 type BlogPageResponse struct {
-	PageID      uint64 `json:"id"`
-	Owner       uint64 `json:"owner"`
-	Nickname    string `json:"nickname"`
+	UserID      uint64 `json:"userID"`
 	Header_img  string `json:"header_img"`
 	Description string `json:"description"`
+	Nickname    string `json:"nickname"`
+	Nim         string `json:"nim"`
+	Image       string `json:"image"`
 }
 
 type BlogPagesSearchResponse struct {
@@ -45,11 +48,12 @@ func CreateBlogPagesSearchResponses(bps entity.BlogPagesPeopleJoined) *BlogPages
 
 func CreateBlogPageResponse(bp entity.BlogPageUserJoined) BlogPageResponse {
 	return BlogPageResponse{
-		PageID:      bp.BlogPage.PageID,
-		Owner:       bp.BlogPage.Owner,
-		Nickname:    bp.User.Nickname,
+		UserID:      bp.User.UserID,
 		Header_img:  bp.BlogPage.HeaderImage,
 		Description: bp.BlogPage.Description,
+		Nickname:    bp.User.Nickname,
+		Nim:         bp.User.Nim,
+		Image:       bp.User.Image,
 	}
 }
 

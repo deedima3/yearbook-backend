@@ -16,7 +16,7 @@ type blogpagesRepositoryImpl struct {
 
 var (
 	GET_ALL_PAGES = `
-	SELECT bp.blogID, bp.owner, bp.header_img, u.nickname, bp.description FROM blogpages bp
+	SELECT u.userID, bp.header_img, bp.description, u.nickname, u.nim, u.image FROM blogpages bp
 	JOIN user u ON bp.owner = u.userID;
 	`
 	GET_USER_PAGE = `
@@ -389,11 +389,12 @@ func (br blogpagesRepositoryImpl) GetAllPages(ctx context.Context) (entity.BlogP
 		var blogPage entity.BlogPageUserJoined
 
 		err := rows.Scan(
-			&blogPage.BlogPage.PageID,
-			&blogPage.BlogPage.Owner,
+			&blogPage.User.UserID,
 			&blogPage.BlogPage.HeaderImage,
-			&blogPage.User.Nickname,
 			&blogPage.BlogPage.Description,
+			&blogPage.User.Nickname,
+			&blogPage.User.Nim,
+			&blogPage.User.Image,
 		)
 
 		if err != nil {
